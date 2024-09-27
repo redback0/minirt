@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/09/25 12:54:16 by njackson         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:53:36 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # include "libft.h"
 # include "mlx.h"
 
+// color, stored as 3 values from 0-255
+// it may be useful in future to have a vector type color struct as well
 typedef struct s_color
 {
 	int	red;
@@ -23,6 +25,7 @@ typedef struct s_color
 	int	green;
 }	t_color;
 
+// a basic vector type
 typedef struct s_vec3
 {
 	double	x;
@@ -30,16 +33,19 @@ typedef struct s_vec3
 	double	z;
 }	t_vec3;
 
+// typedefs so we can specify what a vector is being used for
 typedef t_vec3	t_pos;
 typedef t_vec3	t_angle;
 typedef t_vec3	t_point;
 
+// the ambient light of a scene
 typedef struct s_alight
 {
 	double	ratio;
 	t_color	color;
 }	t_alight;
 
+// a spot light, or just a light
 typedef struct s_slight
 {
 	t_pos	pos;
@@ -47,6 +53,10 @@ typedef struct s_slight
 	t_color	color;
 }	t_slight;
 
+// the camera :)
+// angle is the direction in which the comera faces. I'm not set on this name,
+//  feel free to rename it
+// fov stands for field of view, which is the horizontal angle for the camera
 typedef struct s_cam
 {
 	t_pos	pos;
@@ -54,6 +64,7 @@ typedef struct s_cam
 	int		fov;
 }	t_cam;
 
+// an enum for defining what type of object is stored in the struct below
 typedef enum e_obj_id
 {
 	SPHERE,
@@ -61,6 +72,8 @@ typedef enum e_obj_id
 	CYLINDER
 }	t_obj_id;
 
+// the default object struct; this could be 3 different structs, but I think
+//  it'll make things slightly easier if we store it as one
 // note that diameter is unused for a plane, angle is unused for a sphere, and
 // height is unused for both
 typedef struct s_obj
@@ -73,14 +86,21 @@ typedef struct s_obj
 	double		height;
 }	t_obj;
 
+// for object type specific functions, it might be useful to refer to the
+// objects by their specific types, rather than a generalized object
+typedef t_obj	t_plane;
+typedef t_obj	t_sphere;
+typedef t_obj	t_cylinder;
+
 /*
 IN LIBFT t_list MUST BE DEFINED AS
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
-}
+}	t_list;
 THIS WILL BREAK OTHERWISE
+don't think about this too hard though
 */
 typedef struct s_obj_list
 {
@@ -94,7 +114,7 @@ typedef struct s_scene
 	// below may change later to a linked list
 	t_slight	slight;
 	t_cam		cam;
-	t_obj_list	objs;
+	t_obj_list	*objs;
 }	t_scene;
 
 #endif //MINIRT_H
