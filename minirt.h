@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/09/30 14:55:07 by njackson         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:42:16 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,15 @@
 
 # include "libft.h"
 # include "mlx.h"
+
+// some define crap, don't worry about this
+# ifdef LINUX
+#  define DESTROY_DISPLAY 1
+#  define RESIZABLE 1
+# else
+#  define DESTROY_DISPLAY 0
+#  define RESIZABLE 0
+# endif
 
 // color, stored as 3 values from 0-255
 // it may be useful in future to have a vector type color struct as well
@@ -149,5 +158,9 @@ typedef struct s_mrt_dat
 	t_scene	scene;
 	t_mlx	mlx;
 }	t_mrt_dat;
+
+int		get_mlx_dat(t_mlx *mlx);
+int		cleanup_mlx(t_mlx *mlx);
+int		new_image(void *mlxptr, t_image *image, int width, int height);
 
 #endif //MINIRT_H

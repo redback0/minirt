@@ -5,7 +5,7 @@ DEBUG_FLAGS := -g -DDEBUG=1
 NAME := miniRT
 
 # list all files without file extension
-FILES := main \
+FILES := mrt_mlx_test	mrt_mlx \
 
 SRC_DIR := src/
 OBJ_DIR := obj/
@@ -36,7 +36,7 @@ FLIBS := $(join $(addsuffix /lib, $(DLIBS)), $(addsuffix .a, $(LIBS)))
 
 LFLAGS += $(addprefix -L, $(DLIBS)) $(addprefix -l, $(LIBS))
 
-IFLAGS := $(addprefix -I, $(DLIBS))
+IFLAGS := -I. $(addprefix -I, $(DLIBS))
 
 ifdef MAKE_TERMOUT
 #PREFIX/COLOUR VARIABLES
