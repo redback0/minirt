@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/09/27 15:53:36 by njackson         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:01:19 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,9 @@ typedef struct s_list
 }	t_list;
 THIS WILL BREAK OTHERWISE
 don't think about this too hard though
+
+note, I may remove this later, changing all references to it to use explicit
+casts
 */
 typedef struct s_obj_list
 {
@@ -108,6 +111,7 @@ typedef struct s_obj_list
 	struct s_obj_list	*next;
 }	t_obj_list;
 
+// a collection of all the parts of the scene
 typedef struct s_scene
 {
 	t_alight	alight;
@@ -116,5 +120,35 @@ typedef struct s_scene
 	t_cam		cam;
 	t_obj_list	*objs;
 }	t_scene;
+
+// all the useful mlx image data
+typedef struct s_image
+{
+	void	*img;
+	uint	*imgdat;
+	int		img_size;
+	int		height;
+	int		width;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+}	t_image;
+
+// a collection of all the mlx data.
+typedef struct s_mlx
+{
+	void	*mlxptr;
+	void	*winptr;
+	t_image	img;
+}	t_mlx;
+
+// a complete collection of all the common information that will need to be
+// passed around. When creating the data at the start, you'll only have the
+// struct you're adding to
+typedef struct s_mrt_dat
+{
+	t_scene	scene;
+	t_mlx	mlx;
+}	t_mrt_dat;
 
 #endif //MINIRT_H
