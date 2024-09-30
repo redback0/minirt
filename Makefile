@@ -34,7 +34,7 @@ DLIBS := libft $(MLX)
 LIBS := ft mlx
 FLIBS := $(join $(addsuffix /lib, $(DLIBS)), $(addsuffix .a, $(LIBS)))
 
-LFLAGS += $(addprefix -L, $(DLIBS)) $(addprefix -l, $(LIBS))
+LFLAGS := $(addprefix -L, $(DLIBS)) $(addprefix -l, $(LIBS)) $(LFLAGS)
 
 IFLAGS := -I. $(addprefix -I, $(DLIBS))
 

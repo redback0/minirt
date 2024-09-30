@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:01:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/09/30 15:33:04 by njackson         ###   ########.fr       */
+/*   Updated: 2024/09/30 15:54:10 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	get_mlx_dat(t_mlx *mlx)
 			"MiniRT by njackson and nlehmeye");
 	if (!mlx->winptr)
 		return (1);
+	mlx->img.img = 0;
 	if (new_image(mlx->mlxptr, &mlx->img, 800, 600))
 		return (1); //probably cleanup here as well
 	return (0);
@@ -31,7 +32,10 @@ int	cleanup_mlx(t_mlx *mlx)
 	mlx_destroy_image(mlx->mlxptr, mlx->img.img);
 	mlx_destroy_window(mlx->mlxptr, mlx->winptr);
 	if (DESTROY_DISPLAY)
+	{
 		mlx_destroy_display(mlx->mlxptr);
+		free(mlx->mlxptr);
+	}
 	return (0);
 }
 
