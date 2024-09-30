@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/09/30 16:23:46 by njackson         ###   ########.fr       */
+/*   Updated: 2024/09/30 17:27:23 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,5 +163,7 @@ typedef struct s_mrt_dat
 int		get_mlx_dat(t_mlx *mlx);
 int		cleanup_mlx(t_mlx *mlx);
 int		new_image(void *mlxptr, t_image *image, int width, int height);
+void	get_all_pixels(t_mrt_dat *dat,
+			t_color (*pixel_func)(t_mrt_dat *, int, int));
 
 #endif //MINIRT_H
