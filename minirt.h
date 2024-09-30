@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/09/30 14:01:19 by njackson         ###   ########.fr       */
+/*   Updated: 2024/09/30 14:55:07 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ typedef struct s_image
 {
 	void	*img;
 	uint	*imgdat;
-	int		img_size;
 	int		height;
 	int		width;
 	int		bits_per_pixel;
