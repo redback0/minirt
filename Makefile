@@ -22,19 +22,19 @@ UNAME := $(shell uname -s)
 ifeq ($(UNAME),Darwin)
 	CFLAGS += -DMAC_OS
 	MLX = minilibx_macos
-	LFLAGS += -framework OpenGL -framework AppKit
+	LFLAGS := -framework OpenGL -framework AppKit
 endif
 ifeq ($(UNAME),Linux)
 	CFLAGS += -DLINUX
 	MLX = minilibx-linux
-	LFLAGS += -lXext -lX11 -lm
+	LFLAGS := -lXext -lX11 -lm
 endif
 
 DLIBS := libft $(MLX)
 LIBS := ft mlx
 FLIBS := $(join $(addsuffix /lib, $(DLIBS)), $(addsuffix .a, $(LIBS)))
 
-LFLAGS := $(addprefix -L, $(DLIBS)) $(addprefix -l, $(LIBS))
+LFLAGS += $(addprefix -L, $(DLIBS)) $(addprefix -l, $(LIBS))
 
 IFLAGS := $(addprefix -I, $(DLIBS))
 
