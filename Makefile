@@ -7,6 +7,20 @@ NAME := miniRT
 # list all files without file extension
 FILES := mrt_mlx_test	mrt_mlx \
 
+# OS SPECIFICS
+UNAME := $(shell uname -s)
+ifeq ($(UNAME),Darwin)
+	CFLAGS += -DMAC_OS
+	MLX = minilibx_macos
+	LFLAGS := -framework OpenGL -framework AppKit
+	FILES += mrt_macos
+endif
+ifeq ($(UNAME),Linux)
+	CFLAGS += -DLINUX
+	MLX = minilibx-linux
+	LFLAGS := -lXext -lX11 -lm
+endif
+
 SRC_DIR := src/
 OBJ_DIR := obj/
 DEBUG_DIR := debug_obj/
@@ -17,19 +31,6 @@ DEP := $(OBJ:.o=.d)
 DEBUG_OBJ := $(patsubst $(OBJ_DIR)%, $(DEBUG_DIR)%, $(OBJ))
 DEBUG_DEP := $(DEBUG_OBJ:.o=.d)
 
-# OS SPECIFICS
-UNAME := $(shell uname -s)
-ifeq ($(UNAME),Darwin)
-	CFLAGS += -DMAC_OS
-	MLX = minilibx_macos
-	LFLAGS := -framework OpenGL -framework AppKit
-endif
-ifeq ($(UNAME),Linux)
-	CFLAGS += -DLINUX
-	MLX = minilibx-linux
-	LFLAGS := -lXext -lX11 -lm
-endif
-
 DLIBS := libft $(MLX)
 LIBS := ft mlx
 FLIBS := $(join $(addsuffix /lib, $(DLIBS)), $(addsuffix .a, $(LIBS)))
@@ -38,14 +39,12 @@ LFLAGS := $(addprefix -L, $(DLIBS)) $(addprefix -l, $(LIBS)) $(LFLAGS)
 
 IFLAGS := -I. $(addprefix -I, $(DLIBS))
 
-ifdef MAKE_TERMOUT
 #PREFIX/COLOUR VARIABLES
 C_GRAY := \033[1;30m
 C_ORANGE := \033[0;33m
 C_RED := \033[0;31m
 C_CYAN := \033[0;36m
 NC := \033[0m
-endif
 
 PREFIX := $(C_ORANGE)<$(NAME)>$(NC)
 

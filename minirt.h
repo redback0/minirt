@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/09/30 15:42:16 by njackson         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:23:46 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #  define DESTROY_DISPLAY 1
 #  define RESIZABLE 1
 # else
+void	mlx_destroy_display(void *mlx);
 #  define DESTROY_DISPLAY 0
 #  define RESIZABLE 0
 # endif
@@ -133,13 +134,13 @@ typedef struct s_scene
 // all the useful mlx image data
 typedef struct s_image
 {
-	void	*img;
-	uint	*imgdat;
-	int		height;
-	int		width;
-	int		bits_per_pixel;
-	int		size_line;
-	int		endian;
+	void			*img;
+	unsigned int	*imgdat;
+	int				height;
+	int				width;
+	int				bits_per_pixel;
+	int				size_line;
+	int				endian;
 }	t_image;
 
 // a collection of all the mlx data.

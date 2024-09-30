@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:01:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/09/30 15:54:10 by njackson         ###   ########.fr       */
+/*   Updated: 2024/09/30 16:16:48 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	new_image(void *mlxptr, t_image *image, int width, int height)
 		return (1);
 	image->width = width;
 	image->height = height;
-	image->imgdat = (uint *)mlx_get_data_addr(image->img,
+	image->imgdat = (unsigned int *)mlx_get_data_addr(image->img,
 			&image->bits_per_pixel, &image->size_line, &image->endian);
 	if (!image->imgdat)
 		return (1); // note, this would probably have cleanup
