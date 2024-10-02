@@ -8,11 +8,11 @@ t_color	get_color(t_mrt_dat *dat, int x, int y)
 	double	xscale;
 	double	yscale;
 
-	xscale = 255.0 / dat->mlx.img.width;
-	yscale = 255.0 / dat->mlx.img.height;
-	color.red = 255 - x * xscale;
-	color.green = x * xscale * y * yscale / 255;
-	color.blue = 255 - y * yscale;
+	xscale = 255.0 / dat->mlx.img.width * x;
+	yscale = 255.0 / dat->mlx.img.height * y;
+	color.red = 255 - xscale;
+	color.green = (xscale + yscale) / 2;
+	color.blue = 255 - yscale;
 	return (color);
 }
 

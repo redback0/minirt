@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:01:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/10/02 14:16:25 by njackson         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:47:41 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	get_mlx_dat(t_mrt_dat *dat)
 	if (new_image(dat->mlx.mlxptr, &dat->mlx.img, 800, 600))
 		return (1); //probably cleanup here as well
 	mlx_key_hook(dat->mlx.winptr, key_hook, dat);
+	//mlx_hook(dat.mlx.winptr, 17, 1L << 5, &window_closed, &dat);
 	return (0);
 }
 
