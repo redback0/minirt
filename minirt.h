@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/09/30 17:27:23 by njackson         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:16:55 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@
 
 // some define crap, don't worry about this
 # ifdef LINUX
+#  define K_ESCAPE 0xff1b
+
 #  define DESTROY_DISPLAY 1
 #  define RESIZABLE 1
+
 # else
+#  define K_ESCAPE 0x35
+
 void	mlx_destroy_display(void *mlx);
 #  define DESTROY_DISPLAY 0
 #  define RESIZABLE 0
@@ -160,10 +165,11 @@ typedef struct s_mrt_dat
 	t_mlx	mlx;
 }	t_mrt_dat;
 
-int		get_mlx_dat(t_mlx *mlx);
+int		get_mlx_dat(t_mrt_dat *dat);
 int		cleanup_mlx(t_mlx *mlx);
 int		new_image(void *mlxptr, t_image *image, int width, int height);
 void	get_all_pixels(t_mrt_dat *dat,
 			t_color (*pixel_func)(t_mrt_dat *, int, int));
+int		key_hook(int key, t_mrt_dat *dat);
 
 #endif //MINIRT_H

@@ -5,17 +5,14 @@
 t_color	get_color(t_mrt_dat *dat, int x, int y)
 {
 	t_color	color;
-	double	scale;
+	double	xscale;
+	double	yscale;
 
-	(void)y;
-	scale = 255.0 / dat->mlx.img.width;
-	color.red = 255 - x * scale;
-	color.green = x * scale;
-	color.blue = 0;
-	if (color.red > 255 || color.red < 0)
-		printf("RED INCORRECT\n");
-	if (color.green > 255 || color.green < 0)
-		printf("RED INCORRECT\n");
+	xscale = 255.0 / dat->mlx.img.width;
+	yscale = 255.0 / dat->mlx.img.height;
+	color.red = 255 - x * xscale;
+	color.green = x * xscale * y * yscale / 255;
+	color.blue = 255 - y * yscale;
 	return (color);
 }
 
@@ -35,7 +32,7 @@ int main(void)
 {
 	t_mrt_dat	dat;
 
-	get_mlx_dat(&dat.mlx);
+	get_mlx_dat(&dat);
 	get_all_pixels(&dat, *get_color);
 	mlx_put_image_to_window(dat.mlx.mlxptr, dat.mlx.winptr, dat.mlx.img.img,
 		0, 0);

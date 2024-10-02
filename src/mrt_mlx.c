@@ -6,24 +6,36 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:01:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/09/30 18:21:28 by njackson         ###   ########.fr       */
+/*   Updated: 2024/10/02 14:16:25 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-int	get_mlx_dat(t_mlx *mlx)
+int	get_mlx_dat(t_mrt_dat *dat)
 {
-	mlx->mlxptr = mlx_init();
-	if (!mlx->mlxptr)
+	dat->mlx.mlxptr = mlx_init();
+	if (!dat->mlx.mlxptr)
 		return (1);
-	mlx->winptr = mlx_new_window(mlx->mlxptr, 800, 600,
+	dat->mlx.winptr = mlx_new_window(dat->mlx.mlxptr, 800, 600,
 			"MiniRT by njackson and nlehmeye");
-	if (!mlx->winptr)
+	if (!dat->mlx.winptr)
 		return (1);
-	mlx->img.img = 0;
-	if (new_image(mlx->mlxptr, &mlx->img, 800, 600))
+	dat->mlx.img.img = 0;
+	if (new_image(dat->mlx.mlxptr, &dat->mlx.img, 800, 600))
 		return (1); //probably cleanup here as well
+	mlx_key_hook(dat->mlx.winptr, key_hook, dat);
+	return (0);
+}
+
+int	key_hook(int key, t_mrt_dat *dat)
+{
+	if (key == K_ESCAPE)
+	{
+		cleanup_mlx(&dat->mlx);
+		// cleanup_scene(&dat->scene);
+		exit(0);
+	}
 	return (0);
 }
 
