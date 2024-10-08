@@ -32,6 +32,7 @@ FILES := ft_atoi		ft_bzero		ft_calloc \
 		 ft_log_base_n	ft_memswap		ft_log \
 		 ft_split_free	ft_min			ft_max \
 		 ft_atoi_base	ft_atou_base	ft_atod \
+		 ft_atod_strict
 
 SRC_DIR := src/
 OBJ_DIR := obj/

@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 00:30:22 by njackson          #+#    #+#             */
-/*   Updated: 2024/09/14 16:56:49 by njackson         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:33:08 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int				ft_atoi_base(const char *str, char *base);
 int				ft_atoi_strict(const char *str, int *err);
 unsigned int	ft_atou_base(const char *str, char *base);
 double			ft_atod(const char *str);
+double			ft_atod_strict(const char *str, int *err);
 void			*ft_calloc(size_t count, size_t size);
 char			*ft_strdup(const char *s1);
 
