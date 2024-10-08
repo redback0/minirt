@@ -61,12 +61,12 @@ typedef struct s_alight
 }	t_alight;
 
 // a spot light, or just a light
-typedef struct s_slight
+typedef struct s_light
 {
 	t_pos	pos;
 	double	ratio;
 	t_color	color;
-}	t_slight;
+}	t_light;
 
 // the camera :)
 // angle is the direction in which the comera faces. I'm not set on this name,
@@ -131,7 +131,7 @@ typedef struct s_scene
 {
 	t_alight	alight;
 	// below may change later to a linked list
-	t_slight	slight;
+	t_light		light;
 	t_cam		cam;
 	t_obj_list	*objs;
 }	t_scene;
