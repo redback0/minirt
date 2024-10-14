@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/10/14 14:45:59 by njackson         ###   ########.fr       */
+/*   Updated: 2024/10/14 15:36:28 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ typedef t_vec3	t_angle;
 typedef t_vec3	t_point;
 
 // vector functions
-t_vec3	v3_normalize(t_vec3 v);
+t_vec3	v3_normalize(const t_vec3 *v);
+double	v3_dot_product(const t_vec3 *a, const t_vec3 *b);
 
 // the ambient light of a scene
 typedef struct s_alight
