@@ -5,7 +5,7 @@ DEBUG_FLAGS := -g -DDEBUG=1
 NAME := miniRT
 
 # list all files without file extension
-FILES := mrt_mlx_test	mrt_mlx \
+FILES := mrt_mlx_test	mrt_mlx			vector_math \
 
 # OS SPECIFICS
 UNAME := $(shell uname -s)

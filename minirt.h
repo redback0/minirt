@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/10/02 14:16:55 by njackson         ###   ########.fr       */
+/*   Updated: 2024/10/14 14:45:59 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ typedef struct s_vec3
 typedef t_vec3	t_pos;
 typedef t_vec3	t_angle;
 typedef t_vec3	t_point;
+
+// vector functions
+t_vec3	v3_normalize(t_vec3 v);
 
 // the ambient light of a scene
 typedef struct s_alight
