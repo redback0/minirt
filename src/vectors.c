@@ -6,13 +6,13 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 12:11:33 by njackson          #+#    #+#             */
-/*   Updated: 2024/11/06 13:47:49 by njackson         ###   ########.fr       */
+/*   Updated: 2024/11/06 15:16:13 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-double	dot_product(t_vec3 a, t_vec3 b)
+double	vec3_dot_product(t_vec3 a, t_vec3 b)
 {
 	double	out;
 
@@ -45,5 +45,16 @@ t_vec3	vec3_inverse(t_vec3 a)
 	a.x = -a.x;
 	a.y = -a.y;
 	a.z = -a.z;
+	return (a);
+}
+
+t_vec3	vec3_reflect(t_vec3 a, t_vec3 r)
+{
+	double	proj;
+
+	proj = 2 * vec3_dot_product(a, r);
+	a.x -= r.x * proj;
+	a.y -= r.y * proj;
+	a.z -= r.z * proj;
 	return (a);
 }
