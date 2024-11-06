@@ -107,33 +107,13 @@ typedef t_obj	t_plane;
 typedef t_obj	t_sphere;
 typedef t_obj	t_cylinder;
 
-/*
-IN LIBFT t_list MUST BE DEFINED AS
-typedef struct s_list
-{
-	void			*content;
-	struct s_list	*next;
-}	t_list;
-THIS WILL BREAK OTHERWISE
-don't think about this too hard though
-
-note, I may remove this later, changing all references to it to use explicit
-casts
-*/
-typedef struct s_obj_list
-{
-	t_obj				*content;
-	struct s_obj_list	*next;
-}	t_obj_list;
-
-// a collection of all the parts of the scene
 typedef struct s_scene
 {
 	t_alight	alight;
 	// below may change later to a linked list
 	t_light		light;
 	t_cam		cam;
-	t_obj_list	*objs;
+	t_list	*objs;
 }	t_scene;
 
 // all the useful mlx image data
