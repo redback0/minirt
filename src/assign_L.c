@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-void	assign_L(char **elements)
+void	assign_L(char **elements, t_scene scene)
 {
 	ft_printf("%s\n", elements[0]);
 }

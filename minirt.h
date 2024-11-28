@@ -156,13 +156,13 @@ int		key_hook(int key, t_mrt_dat *dat);
 // file parsing functions
 int 	test_main(void);
 void	ft_err(char *err_msg);
-void	parse_input(const char *file);
-void	id_assign(char *line);
-void	assign_A(char **elements);
-void	assign_C(char **elements);
-void	assign_L(char **elements);
-void	assign_PL(char **elements);
-void	assign_SP(char **elements);
-void	assign_CY(char **elements);
+void	parse_input(const char *file, t_scene scene);
+void	id_assign(char *line, t_scene scene);
+void	assign_A(char **elements, t_scene scene);
+void	assign_C(char **elements, t_scene scene);
+void	assign_L(char **elements, t_scene scene);
+void	assign_pl(char **elements, t_scene scene);
+void	assign_sp(char **elements, t_scene scene);
+void	assign_cy(char **elements, t_scene scene);
 
 #endif //MINIRT_H

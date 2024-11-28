@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-void	parse_input(const char *file)
+void	parse_input(const char *file, t_scene scene)
 {
 	int		fd;
 	char	*line;
@@ -24,7 +24,7 @@ void	parse_input(const char *file)
 	line = get_next_line(fd);
 	while (line)
 	{
-		id_assign(line);
+		id_assign(line, scene);
 		free(line);
 		line = get_next_line(fd);
 	}
@@ -32,7 +32,7 @@ void	parse_input(const char *file)
 	free(line);
 }
 
-void	id_assign(char *line)
+void	id_assign(char *line, t_scene scene)
 {
 	char	**elements;
 
@@ -40,17 +40,17 @@ void	id_assign(char *line)
 	if (!elements || elements[0][0] == '\n')
 		return ;
 	else if (!ft_strncmp(elements[0], "A", 1))
-		assign_A(elements);
+		assign_A(elements, scene);
 	else if (!ft_strncmp(elements[0], "C", 1))
-		assign_C(elements);
+		assign_C(elements, scene);
 	else if (!ft_strncmp(elements[0], "L", 1))
-		assign_L(elements);
+		assign_L(elements, scene);
 	else if (!ft_strncmp(elements[0], "pl", 2))
-		assign_pl(elements);
+		assign_pl(elements, scene);
 	else if (!ft_strncmp(elements[0], "sp", 2))
-		assign_sp(elements);
+		assign_sp(elements, scene);
 	else if (!ft_strncmp(elements[0], "cy", 2))
-		assign_cy(elements);
+		assign_cy(elements, scene);
 	else
 		ft_err("Non-element type present in scene file");
 	ft_split_free(elements, free);

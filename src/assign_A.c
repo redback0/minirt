@@ -14,7 +14,7 @@
 
 // How do we refer to each object in the scene, attaching it to the scene.
 // Initialise a struct?
-t_alight	assign_A(char **elements)
+t_alight	assign_A(char **elements, t_scene scene)
 {
 	char **rgb;
 	t_alight alight;
