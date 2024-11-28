@@ -5,7 +5,16 @@ DEBUG_FLAGS := -g -DDEBUG=1
 NAME := miniRT
 
 # list all files without file extension
-FILES := mrt_mlx_test	mrt_mlx \
+FILES := 	mrt_mlx \
+	main \
+	parse_input \
+	input_checks \
+	scene_errs \
+	assign_A \
+	assign_C \
+	assign_L \
+
+#mrt_mlx_test
 
 # OS SPECIFICS
 UNAME := $(shell uname -s)

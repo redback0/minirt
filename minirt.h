@@ -31,14 +31,14 @@ void	mlx_destroy_display(void *mlx);
 #  define RESIZABLE 0
 # endif
 
-// color, stored as 3 values from 0-255
-// it may be useful in future to have a vector type color struct as well
-typedef struct s_color
+// colour, stored as 3 values from 0-255
+// it may be useful in future to have a vector type colour struct as well
+typedef struct s_colour
 {
 	int	red;
 	int	blue;
 	int	green;
-}	t_color;
+}	t_colour;
 
 // a basic vector type
 typedef struct s_vec3
@@ -57,7 +57,7 @@ typedef t_vec3	t_point;
 typedef struct s_alight
 {
 	double	ratio;
-	t_color	color;
+	t_colour	colour;
 }	t_alight;
 
 // a spot light, or just a light
@@ -65,7 +65,7 @@ typedef struct s_light
 {
 	t_pos	pos;
 	double	ratio;
-	t_color	color;
+	t_colour	colour;
 }	t_light;
 
 // the camera :)
@@ -95,7 +95,7 @@ typedef struct s_obj
 {
 	t_obj_id	id;
 	t_pos		pos;
-	t_color		color;
+	t_colour	colour;
 	t_angle		angle;
 	double		diameter;
 	double		height;
@@ -145,11 +145,24 @@ typedef struct s_mrt_dat
 	t_mlx	mlx;
 }	t_mrt_dat;
 
+// mlx management functions
 int		get_mlx_dat(t_mrt_dat *dat);
 int		cleanup_mlx(t_mlx *mlx);
 int		new_image(void *mlxptr, t_image *image, int width, int height);
 void	get_all_pixels(t_mrt_dat *dat,
-			t_color (*pixel_func)(t_mrt_dat *, int, int));
+			t_colour (*pixel_func)(t_mrt_dat *, int, int));
 int		key_hook(int key, t_mrt_dat *dat);
+
+// file parsing functions
+int 	test_main(void);
+void	ft_err(char *err_msg);
+void	parse_input(const char *file);
+void	id_assign(char *line);
+void	assign_A(char **elements);
+void	assign_C(char **elements);
+void	assign_L(char **elements);
+void	assign_PL(char **elements);
+void	assign_SP(char **elements);
+void	assign_CY(char **elements);
 
 #endif //MINIRT_H

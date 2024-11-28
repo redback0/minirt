@@ -28,7 +28,7 @@ int window_closed(t_mrt_dat *dat)
 	exit(0);
 }
 
-int main(void)
+int test_main(void)
 {
 	t_mrt_dat	dat;
 
@@ -38,4 +38,5 @@ int main(void)
 		0, 0);
 	mlx_hook(dat.mlx.winptr, 17, 1L << 5, &window_closed, &dat);
 	mlx_loop(dat.mlx.mlxptr);
+	return (0);
 }
