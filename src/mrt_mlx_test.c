@@ -2,9 +2,9 @@
 #include "minirt.h"
 #include <stdio.h>
 
-t_color	get_color(t_mrt_dat *dat, int x, int y)
+t_colour	get_color(t_mrt_dat *dat, int x, int y)
 {
-	t_color	color;
+	t_colour	color;
 	double	xscale;
 	double	yscale;
 
@@ -33,7 +33,7 @@ int test_main(void)
 	t_mrt_dat	dat;
 
 	get_mlx_dat(&dat);
-	get_all_pixels(&dat, *get_color);
+	get_all_pixels(&dat, *get_colour);
 	mlx_put_image_to_window(dat.mlx.mlxptr, dat.mlx.winptr, dat.mlx.img.img,
 		0, 0);
 	mlx_hook(dat.mlx.winptr, 17, 1L << 5, &window_closed, &dat);

@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:01:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/10/02 14:47:41 by njackson         ###   ########.fr       */
+/*   Updated: 2024/11/28 13:08:05 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ int	new_image(void *mlxptr, t_image *image, int width, int height)
 }
 
 void	get_all_pixels(t_mrt_dat *dat,
-			t_color (*pixel_func)(t_mrt_dat *, int, int))
+			t_colour (*pixel_func)(t_mrt_dat *, int, int))
 {
-	t_color	color;
+	t_colour	color;
 	int		pixel;
 	int		x;
 	int		y;
