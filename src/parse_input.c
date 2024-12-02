@@ -52,7 +52,44 @@ void	id_assign(char *line, t_scene scene)
 	else if (!ft_strncmp(elements[0], "cy", 2))
 		assign_cy(elements, scene);
 	else
-		ft_err("Non-element type present in scene file");
+		ft_err("Non-element type present in .rt file.");
 	ft_split_free(elements, free);
-	ft_printf("%s", line);
+}
+
+void	assign_vector(char *elementinfo, t_vec3 *vector)
+{
+	char **xyz;
+
+	xyz = ft_split(elementinfo, ',');
+	if (count_array_rows((void **)xyz) != 3)
+		return (ft_err("Incorrect vector format."));
+	vector->x = ft_atod(xyz[0]);
+	vector->y = ft_atod(xyz[1]);
+	vector->z = ft_atod(xyz[2]);
+}
+
+void	assign_colour(char *elementinfo, t_colour *rgb)
+{
+	char **colour_info;
+
+	colour_info = ft_split(elementinfo, ',');
+	if (count_array_rows((void **)colour_info) != 3)
+		return (ft_err("Incorrect colour format."));
+	rgb->red = ft_atoi(colour_info[0]);
+	rgb->green = ft_atoi(colour_info[1]);
+	rgb->blue = ft_atoi(colour_info[2]);
+	check_colour_range(*rgb);
+}
+
+int	count_array_rows(void **arr)
+{
+	int	total_rows;
+	
+	total_rows = 0;
+	while (*arr != NULL)
+	{
+		total_rows++;
+		arr++;
+	}
+	return(total_rows);
 }

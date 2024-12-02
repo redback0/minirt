@@ -15,6 +15,9 @@
 
 # include "libft.h"
 # include "mlx.h"
+# include <fcntl.h>
+# include <math.h>
+# include <stdio.h>
 
 // some define crap, don't worry about this
 # ifdef LINUX
@@ -111,9 +114,9 @@ typedef struct s_scene
 {
 	t_alight	alight;
 	// below may change later to a linked list
-	t_light		light;
 	t_cam		cam;
-	t_list	*objs;
+	t_light		light;
+	t_list		*objs;
 }	t_scene;
 
 // all the useful mlx image data
@@ -158,11 +161,24 @@ int 	test_main(void);
 void	ft_err(char *err_msg);
 void	parse_input(const char *file, t_scene scene);
 void	id_assign(char *line, t_scene scene);
+void	assign_vector(char *elementinfo, t_vec3 *vector);
+void	assign_colour(char *elementinfo, t_colour *rgb);
 void	assign_A(char **elements, t_scene scene);
 void	assign_C(char **elements, t_scene scene);
 void	assign_L(char **elements, t_scene scene);
+
+// t_obj	*assign_pl(char **elements, t_scene scene);
+
 void	assign_pl(char **elements, t_scene scene);
 void	assign_sp(char **elements, t_scene scene);
 void	assign_cy(char **elements, t_scene scene);
+
+int		count_array_rows(void **arr);
+
+void	check_sym_unit(t_vec3 angle);
+void	check_unit(double ratio);
+void	check_colour_range(t_colour rgb);
+void	check_positive(double obj_dimensions);
+void	check_fov(int fov);
 
 #endif //MINIRT_H

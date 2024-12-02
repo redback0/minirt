@@ -8,11 +8,9 @@ NAME := miniRT
 FILES := 	mrt_mlx \
 	main \
 	parse_input \
-	input_checks \
-	scene_errs \
-	assign_A \
-	assign_C \
-	assign_L \
+	assign_ACL \
+	assign_obj \
+	check_elements \
 
 #mrt_mlx_test
 

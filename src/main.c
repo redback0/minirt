@@ -25,13 +25,12 @@ void	ft_err(char *err_msg)
 int	main(int argc, char **argv)
 {
 	t_mrt_dat	dat;
-	
-	ft_bzero(&dat, size_t dat);
+	ft_bzero(&dat, sizeof(dat));
 	(void)argv;
 	if (argc != 2)
 		ft_err("Incorrect Number of Arguments");
-	parse_input(argv[1], &(dat.scene));
-	ft_printf("Hello world!\n");
+	parse_input(argv[1], dat.scene);
+	
 	return (0);
 }
 
