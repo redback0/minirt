@@ -84,7 +84,7 @@ void	assign_cy(char **elements, t_scene *scene)
 		return (ft_err("Cylinder Malloc Failed."));
 	obj = ft_lstnew((void *)cylinder);
 	ft_lstadd_front(&scene->objs, obj);
-	ft_bzero(sphere, sizeof(*cylinder));
+	ft_bzero(cylinder, sizeof(*cylinder));
 	if (count_array_rows((void **)elements) != 6)
 		return (ft_err("Incorrect number of element cy info"));
 	cylinder->id = CYLINDER;
