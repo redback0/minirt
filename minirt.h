@@ -159,19 +159,19 @@ int		key_hook(int key, t_mrt_dat *dat);
 // file parsing functions
 int 	test_main(void);
 void	ft_err(char *err_msg);
-void	parse_input(const char *file, t_scene scene);
-void	id_assign(char *line, t_scene scene);
+void	parse_input(const char *file, t_scene *scene);
+void	id_assign(char *line, t_scene *scene);
 void	assign_vector(char *elementinfo, t_vec3 *vector);
 void	assign_colour(char *elementinfo, t_colour *rgb);
-void	assign_A(char **elements, t_scene scene);
-void	assign_C(char **elements, t_scene scene);
-void	assign_L(char **elements, t_scene scene);
+void	assign_A(char **elements, t_scene *scene);
+void	assign_C(char **elements, t_scene *scene);
+void	assign_L(char **elements, t_scene *scene);
 
 // t_obj	*assign_pl(char **elements, t_scene scene);
 
-void	assign_pl(char **elements, t_scene scene);
-void	assign_sp(char **elements, t_scene scene);
-void	assign_cy(char **elements, t_scene scene);
+void	assign_pl(char **elements, t_scene *scene);
+void	assign_sp(char **elements, t_scene *scene);
+void	assign_cy(char **elements, t_scene *scene);
 
 int		count_array_rows(void **arr);
 

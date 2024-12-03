@@ -22,7 +22,7 @@
 // }	t_scene;
 
 
-void	assign_pl(char **elements, t_scene scene)
+void	assign_pl(char **elements, t_scene *scene)
 {
 	//FOR NATE, TUES 3/12 MORNING - Pls help, idk what is wrong with my line 21 and 22.
 	// Everything else pretty much works, and has been tested. The objects are just not in a linked list.
@@ -35,7 +35,7 @@ void	assign_pl(char **elements, t_scene scene)
 	if (!plane)
 		return (ft_err("Plane Malloc Failed."));
 	obj = ft_lstnew((void *)plane);
-	ft_lstadd_front(&scene.objs, obj);
+	ft_lstadd_front(&scene->objs, obj);
 	ft_bzero(plane, sizeof(*plane));
 	if (count_array_rows((void **)elements) != 4)
 		return (ft_err("Incorrect number of element pl info."));
@@ -50,42 +50,52 @@ void	assign_pl(char **elements, t_scene scene)
 	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", plane->colour.red, plane->colour.green, plane->colour.blue);
 }
 
-void	assign_sp(char **elements, t_scene scene)
+void	assign_sp(char **elements, t_scene *scene)
 {
-	t_obj	sphere;
-	
-	ft_bzero(&sphere, sizeof(sphere));
+	t_obj	*sphere;
+	t_list	*obj;
+
+	sphere = malloc(sizeof(*sphere));
+	if (!plane)
+		return (ft_err("Sphere Malloc Failed."));
+	obj = ft_lstnew((void *)sphere);
+	ft_lstadd_front(&scene->objs, obj);
+	ft_bzero(sphere, sizeof(*sphere));
 	if (count_array_rows((void **)elements) != 4)
 		return (ft_err("Incorrect number of element sp info"));
-	sphere.id = SPHERE;
-	assign_vector(elements[1], &sphere.pos);
-	sphere.diameter = ft_atod(elements[2]);
-	check_positive(sphere.diameter);
-	assign_colour(elements[3], &sphere.colour);
-	(void)scene;
+	sphere->id = SPHERE;
+	assign_vector(elements[1], &sphere->pos);
+	sphere->diameter = ft_atod(elements[2]);
+	check_positive(sphere->diameter);
+	assign_colour(elements[3], &sphere->colour);
 	// printf("%s\n", elements[0]);
 	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", sphere->pos.x, sphere->pos.y, sphere->pos.z);
 	// printf("DIAMETER:  %f\n", sphere.diameter);
 	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", sphere->colour.red, sphere->colour.green, sphere->colour.blue);
 }
 
-void	assign_cy(char **elements, t_scene scene)
+void	assign_cy(char **elements, t_scene *scene)
 {
-	t_obj	cylinder;
+	t_obj	*cylinder;
+	t_list	*obj;
 	
-	ft_bzero(&cylinder, sizeof(cylinder));
+	cylinder = malloc(sizeof(*cylinder));
+	if (!cylinder)
+		return (ft_err("Cylinder Malloc Failed."));
+	obj = ft_lstnew((void *)cylinder);
+	ft_lstadd_front(&scene->objs, obj);
+	ft_bzero(sphere, sizeof(*cylinder));
 	if (count_array_rows((void **)elements) != 6)
 		return (ft_err("Incorrect number of element cy info"));
-	cylinder.id = CYLINDER;
-	assign_vector(elements[1], &cylinder.pos);
-	assign_vector(elements[2], &cylinder.angle);
-	check_sym_unit(cylinder.angle);
-	cylinder.diameter = ft_atod(elements[3]);
-	check_positive(cylinder.diameter);
-	cylinder.height = ft_atod(elements[4]);
-	check_positive(cylinder.height);
-	assign_colour(elements[5], &cylinder.colour);
-	(void)scene;
+	cylinder->id = CYLINDER;
+	assign_vector(elements[1], &cylinder->pos);
+	assign_vector(elements[2], &cylinder->angle);
+	check_sym_unit(cylinder->angle);
+	cylinder->diameter = ft_atod(elements[3]);
+	check_positive(cylinder->diameter);
+	cylinder->height = ft_atod(elements[4]);
+	check_positive(cylinder.->height);
+	assign_colour(elements[5], &cylinder->colour);
 	// printf("%s\n", elements[0]);
 	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", cylinder.pos.x, cylinder.pos.y, cylinder.pos.z);
 	// printf("ANGLE:   X: %f, Y: %f, Z: %f\n", cylinder.angle.x, cylinder.angle.y, cylinder.angle.z);
