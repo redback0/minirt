@@ -32,12 +32,12 @@ void	check_colour_range(t_colour rgb)
 
 void	check_positive(double obj_dimensions)
 {
-	if (obj_dimensions <=0)
+	if (obj_dimensions <= 0)
 		return (ft_err("Object dimension values not positive."));
 }
 
 void	check_fov(int fov)
 {
-	if (fov < 1 || fov >359)
+	if (fov < 0 || fov > 180)
 		return (ft_err("FOV outside range."));
 }

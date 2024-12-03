@@ -29,9 +29,13 @@ int	main(int argc, char **argv)
 	(void)argv;
 	if (argc != 2)
 		ft_err("Incorrect Number of Arguments");
-	parse_input(argv[1], dat.scene);
+	parse_input(argv[1], &dat.scene);
 	
+	t_list *holder = dat.scene.objs;
+	while (holder != NULL)
+	{
+		printf("OBJ TYPE: %d\n\n", ((t_obj *)holder->content)->id);
+		holder = holder->next;
+	}
 	return (0);
 }
-
-

@@ -12,29 +12,42 @@
 
 #include "minirt.h"
 
+// typedef struct s_scene
+// {
+// 	t_alight	alight;
+// 	// below may change later to a linked list
+// 	t_cam		cam;
+// 	t_light		light;
+// 	t_list		*objs;
+// }	t_scene;
+
+
 void	assign_pl(char **elements, t_scene scene)
 {
 	//FOR NATE, TUES 3/12 MORNING - Pls help, idk what is wrong with my line 21 and 22.
 	// Everything else pretty much works, and has been tested. The objects are just not in a linked list.
 	//The functions in this file all don't return, but as you can see here I started to play with
 	// returning the t_list *obj
-	t_obj	plane;
+	t_obj	*plane;
 	t_list	*obj;
 	
+	plane = malloc(sizeof(*plane));
+	if (!plane)
+		return (ft_err("Plane Malloc Failed."));
 	obj = ft_lstnew((void *)plane);
-	ft_lstadd_back(&scene.objs, obj);
-	ft_bzero(&plane, sizeof(plane));
+	ft_lstadd_front(&scene.objs, obj);
+	ft_bzero(plane, sizeof(*plane));
 	if (count_array_rows((void **)elements) != 4)
 		return (ft_err("Incorrect number of element pl info."));
-	plane.id = PLANE;
-	assign_vector(elements[1], &plane.pos);
-	assign_vector(elements[2], &plane.angle);
-	check_sym_unit(plane.angle);
-	assign_colour(elements[3], &plane.colour);
+	plane->id = PLANE;
+	assign_vector(elements[1], &plane->pos);
+	assign_vector(elements[2], &plane->angle);
+	check_sym_unit(plane->angle);
+	assign_colour(elements[3], &plane->colour);
 	// printf("%s\n", elements[0]);
-	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", plane.pos.x, plane.pos.y, plane.pos.z);
-	// printf("ANGLE:   X: %f, Y: %f, Z: %f\n", plane.angle.x, plane.angle.y, plane.angle.z);
-	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", plane.colour.red, plane.colour.green, plane.colour.blue);
+	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", plane->pos.x, plane->pos.y, plane->pos.z);
+	// printf("ANGLE:   X: %f, Y: %f, Z: %f\n", plane->angle.x, plane->angle.y, plane->angle.z);
+	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", plane->colour.red, plane->colour.green, plane->colour.blue);
 }
 
 void	assign_sp(char **elements, t_scene scene)
@@ -51,9 +64,9 @@ void	assign_sp(char **elements, t_scene scene)
 	assign_colour(elements[3], &sphere.colour);
 	(void)scene;
 	// printf("%s\n", elements[0]);
-	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", sphere.pos.x, sphere.pos.y, sphere.pos.z);
+	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", sphere->pos.x, sphere->pos.y, sphere->pos.z);
 	// printf("DIAMETER:  %f\n", sphere.diameter);
-	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", sphere.colour.red, sphere.colour.green, sphere.colour.blue);
+	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", sphere->colour.red, sphere->colour.green, sphere->colour.blue);
 }
 
 void	assign_cy(char **elements, t_scene scene)

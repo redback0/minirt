@@ -29,7 +29,6 @@ void	parse_input(const char *file, t_scene scene)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	free(line);
 }
 
 void	id_assign(char *line, t_scene scene)
