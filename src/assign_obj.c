@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   input_checks.c                                     :+:      :+:    :+:   */
+/*   assign_obj.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:15:28 by nlehmeye          #+#    #+#             */
-/*   Updated: 2024/11/05 12:15:30 by nlehmeye         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:26:54 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	assign_sp(char **elements, t_scene *scene)
 	t_list	*obj;
 
 	sphere = malloc(sizeof(*sphere));
-	if (!plane)
+	if (!sphere)
 		return (ft_err("Sphere Malloc Failed."));
 	obj = ft_lstnew((void *)sphere);
 	ft_lstadd_front(&scene->objs, obj);
@@ -94,7 +94,7 @@ void	assign_cy(char **elements, t_scene *scene)
 	cylinder->diameter = ft_atod(elements[3]);
 	check_positive(cylinder->diameter);
 	cylinder->height = ft_atod(elements[4]);
-	check_positive(cylinder.->height);
+	check_positive(cylinder->height);
 	assign_colour(elements[5], &cylinder->colour);
 	// printf("%s\n", elements[0]);
 	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", cylinder.pos.x, cylinder.pos.y, cylinder.pos.z);

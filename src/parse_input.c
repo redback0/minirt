@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:43:03 by nlehmeye          #+#    #+#             */
-/*   Updated: 2024/12/03 20:18:48 by njackson         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:25:35 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	parse_input(const char *file, t_scene *scene)
 	line = get_next_line(fd);
 	while (line)
 	{
-		id_assign(line, *scene);
+		id_assign(line, scene);
 		free(line);
 		line = get_next_line(fd);
 	}
