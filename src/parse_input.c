@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assign_input.c                                     :+:      :+:    :+:   */
+/*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:43:03 by nlehmeye          #+#    #+#             */
-/*   Updated: 2024/11/04 11:43:05 by nlehmeye         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:18:48 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	parse_input(const char *file, t_scene scene)
+void	parse_input(const char *file, t_scene *scene)
 {
 	int		fd;
 	char	*line;
@@ -24,14 +24,14 @@ void	parse_input(const char *file, t_scene scene)
 	line = get_next_line(fd);
 	while (line)
 	{
-		id_assign(line, scene);
+		id_assign(line, *scene);
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
 }
 
-void	id_assign(char *line, t_scene scene)
+void	id_assign(char *line, t_scene *scene)
 {
 	char	**elements;
 

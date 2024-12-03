@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   assign_A.c                                         :+:      :+:    :+:   */
+/*   assign_ACL.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 13:42:32 by nlehmeye          #+#    #+#             */
-/*   Updated: 2024/11/05 13:42:33 by nlehmeye         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:16:53 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	assign_A(char **elements, t_scene scene)
+void	assign_A(char **elements, t_scene *scene)
 {
 	t_alight	alight;
 
-	alight = scene.alight;
+	alight = scene->alight;
 	if (count_array_rows((void **)elements) != 3)
 		return (ft_err("Incorrect number of element A info."));
 	alight.ratio = ft_atod(elements[1]);
@@ -27,11 +27,11 @@ void	assign_A(char **elements, t_scene scene)
 	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", alight.colour.red, alight.colour.green, alight.colour.blue);
 }
 
-void	assign_C(char **elements, t_scene scene)
+void	assign_C(char **elements, t_scene *scene)
 {
 	t_cam	camera;
 
-	camera = scene.cam;
+	camera = scene->cam;
 	if (count_array_rows((void **)elements) != 4)
 		return (ft_err("Incorrect number of element C info."));
 	assign_vector(elements[1], &camera.pos);
@@ -44,11 +44,11 @@ void	assign_C(char **elements, t_scene scene)
 	// printf("FOV: %d\n\n", camera.fov);
 }
 
-void	assign_L(char **elements, t_scene scene)
+void	assign_L(char **elements, t_scene *scene)
 {
 	t_light light;
 
-	light = scene.light;
+	light = scene->light;
 	if (count_array_rows((void **)elements) != 4)
 		return (ft_err("Incorrect number of element L info."));
 	assign_vector(elements[1], &light.pos);
