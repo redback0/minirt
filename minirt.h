@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/10/02 14:16:55 by njackson         ###   ########.fr       */
+/*   Updated: 2024/12/04 11:04:24 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,20 @@ typedef struct s_mrt_dat
 	t_scene	scene;
 	t_mlx	mlx;
 }	t_mrt_dat;
+
+typedef struct s_intersect
+{
+	t_point	point;
+	t_obj	*obj;
+}	t_intersect;
+
+// vector math functions -- detailed in doc
+double	vec3_dot_product(t_vec3 vec1, t_vec3 vec2);
+t_vec3	vec3_cross_product(t_vec3 vec1, t_vec3 vec2);
+t_vec3	vec3_add(t_vec3 vec1, t_vec3 vec2);
+t_vec3	vec3_inverse(t_vec3 vec);
+t_vec3	vec3_reflect(t_vec3 vec, t_vec3 reflect);
+t_vec3	vec3_normalise(t_vec3 vec);
 
 // mlx management functions
 int		get_mlx_dat(t_mrt_dat *dat);

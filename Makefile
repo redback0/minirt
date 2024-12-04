@@ -5,12 +5,15 @@ DEBUG_FLAGS := -g -DDEBUG=1
 NAME := miniRT
 
 # list all files without file extension
-FILES := 	mrt_mlx \
-	main \
-	parse_input \
-	assign_ACL \
-	assign_obj \
-	check_elements \
+FILES :=	main \
+			mrt_mlx \
+			parse_input \
+			assign_ACL \
+			assign_obj \
+			check_elements \
+			vectors \
+			vectors_ext \
+
 
 #mrt_mlx_test
 
