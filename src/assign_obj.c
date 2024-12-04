@@ -40,7 +40,9 @@ void	assign_sp(char **elements, t_scene *scene, t_mrt_dat *dat)
 {
 	t_obj	*sphere;
 	t_list	*obj;
+	int		err;
 
+	err = 0;
 	sphere = malloc(sizeof(*sphere));
 	if (!sphere)
 		return (ft_err("Sphere Malloc Failed.", dat));
@@ -51,9 +53,11 @@ void	assign_sp(char **elements, t_scene *scene, t_mrt_dat *dat)
 		return (ft_err("Incorrect number of element sp info", dat));
 	sphere->id = SPHERE;
 	assign_vector(elements[1], &sphere->pos, dat);
-	sphere->diameter = ft_atod(elements[2]);
+	sphere->diameter = ft_atod_strict(elements[2], &err);
 	check_positive(sphere->diameter, dat);
 	assign_colour(elements[3], &sphere->colour, dat);
+	if (err != 0)
+		return (ft_err("atod Error in attempt to assign sphere.", dat));
 	// printf("%s\n", elements[0]);
 	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", sphere->pos.x, sphere->pos.y, sphere->pos.z);
 	// printf("DIAMETER:  %f\n", sphere.diameter);
@@ -64,7 +68,9 @@ void	assign_cy(char **elements, t_scene *scene, t_mrt_dat *dat)
 {
 	t_obj	*cylinder;
 	t_list	*obj;
-	
+	int		err;
+
+	err = 0;
 	cylinder = malloc(sizeof(*cylinder));
 	if (!cylinder)
 		return (ft_err("Cylinder Malloc Failed.", dat));
@@ -77,11 +83,13 @@ void	assign_cy(char **elements, t_scene *scene, t_mrt_dat *dat)
 	assign_vector(elements[1], &cylinder->pos, dat);
 	assign_vector(elements[2], &cylinder->angle, dat);
 	check_sym_unit(cylinder->angle, dat);
-	cylinder->diameter = ft_atod(elements[3]);
+	cylinder->diameter = ft_atod_strict(elements[3], &err);
 	check_positive(cylinder->diameter, dat);
-	cylinder->height = ft_atod(elements[4]);
+	cylinder->height = ft_atod_strict(elements[4], &err);
 	check_positive(cylinder->height, dat);
 	assign_colour(elements[5], &cylinder->colour, dat);
+	if (err != 0)
+		return (ft_err("atod Error in attempt to assign cylinder.", dat));
 	// printf("%s\n", elements[0]);
 	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", cylinder.pos.x, cylinder.pos.y, cylinder.pos.z);
 	// printf("ANGLE:   X: %f, Y: %f, Z: %f\n", cylinder.angle.x, cylinder.angle.y, cylinder.angle.z);

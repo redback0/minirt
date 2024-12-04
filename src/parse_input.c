@@ -24,6 +24,8 @@ void	parse_input(const char *file, t_scene *scene, t_mrt_dat *dat)
 	line = get_next_line(fd);
 	while (line)
 	{
+		if (line[ft_strlen(line) - 1] == '\n')
+			line[ft_strlen(line) - 1] = '\0';
 		id_assign(line, scene, dat);
 		free(line);
 		line = get_next_line(fd);
@@ -36,7 +38,7 @@ void	id_assign(char *line, t_scene *scene, t_mrt_dat *dat)
 	char	**elements;
 
 	elements = ft_split(line, ' ');
-	if (!elements || elements[0][0] == '\n')
+	if (!elements || !elements[0] || elements[0][0] == '\n')
 		return ;
 	else if (!ft_strncmp(elements[0], "A", 1))
 		assign_A(elements, scene, dat);
@@ -57,27 +59,35 @@ void	id_assign(char *line, t_scene *scene, t_mrt_dat *dat)
 
 void	assign_vector(char *elementinfo, t_vec3 *vector, t_mrt_dat *dat)
 {
-	char **xyz;
+	char	**xyz;
+	int		err;
 
+	err = 0;
 	xyz = ft_split(elementinfo, ',');
 	if (count_array_rows((void **)xyz) != 3)
 		return (ft_err("Incorrect vector format.", dat));
-	vector->x = ft_atod(xyz[0]);
-	vector->y = ft_atod(xyz[1]);
-	vector->z = ft_atod(xyz[2]);
+	vector->x = ft_atod_strict(xyz[0], &err);
+	vector->y = ft_atod_strict(xyz[1], &err);
+	vector->z = ft_atod_strict(xyz[2], &err);
+	if (err != 0)
+		return (ft_err("atod Error in attempt to assign vector.", dat));
 }
 
 void	assign_colour(char *elementinfo, t_colour *rgb, t_mrt_dat *dat)
 {
-	char **colour_info;
+	char	**colour_info;
+	int		err;
 
+	err = 0;
 	colour_info = ft_split(elementinfo, ',');
 	if (count_array_rows((void **)colour_info) != 3)
 		return (ft_err("Incorrect colour format.", dat));
-	rgb->red = ft_atoi(colour_info[0]);
-	rgb->green = ft_atoi(colour_info[1]);
-	rgb->blue = ft_atoi(colour_info[2]);
+	rgb->red = ft_atoi_strict(colour_info[0], &err);
+	rgb->green = ft_atoi_strict(colour_info[1], &err);
+	rgb->blue = ft_atoi_strict(colour_info[2], &err);
 	check_colour_range(*rgb, dat);
+	if (err != 0)
+		return (ft_err("atoi Error in attempt to assign colour.", dat));
 }
 
 int	count_array_rows(void **arr)
