@@ -12,10 +12,11 @@
 
 #include "minirt.h"
 
-void	ft_err(char *err_msg)
+void	ft_err(char *err_msg, t_mrt_dat *dat)
 {
 	ft_printf("Error:\n%s\n", err_msg);
-	//call ft_free
+	//call ft_free, pass through *dat
+	(void)dat;
 	exit (1);
 }
 
@@ -28,8 +29,8 @@ int	main(int argc, char **argv)
 	ft_bzero(&dat, sizeof(dat));
 	(void)argv;
 	if (argc != 2)
-		ft_err("Incorrect Number of Arguments");
-	parse_input(argv[1], &dat.scene);
+		ft_err("Incorrect Number of Arguments", &dat);
+	parse_input(argv[1], &dat.scene, &dat);
 	
 	t_list *holder = dat.scene.objs;
 	while (holder != NULL)

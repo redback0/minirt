@@ -172,27 +172,27 @@ int		key_hook(int key, t_mrt_dat *dat);
 
 // file parsing functions
 int 	test_main(void);
-void	ft_err(char *err_msg);
-void	parse_input(const char *file, t_scene *scene);
-void	id_assign(char *line, t_scene *scene);
-void	assign_vector(char *elementinfo, t_vec3 *vector);
-void	assign_colour(char *elementinfo, t_colour *rgb);
-void	assign_A(char **elements, t_scene *scene);
-void	assign_C(char **elements, t_scene *scene);
-void	assign_L(char **elements, t_scene *scene);
+void	ft_err(char *err_msg, t_mrt_dat *dat);
+void	parse_input(const char *file, t_scene *scene, t_mrt_dat *dat);
+void	id_assign(char *line, t_scene *scene, t_mrt_dat *dat);
+void	assign_vector(char *elementinfo, t_vec3 *vector, t_mrt_dat *dat);
+void	assign_colour(char *elementinfo, t_colour *rgb, t_mrt_dat *dat);
+void	assign_A(char **elements, t_scene *scene, t_mrt_dat *dat);
+void	assign_C(char **elements, t_scene *scene, t_mrt_dat *dat);
+void	assign_L(char **elements, t_scene *scene, t_mrt_dat *dat);
 
 // t_obj	*assign_pl(char **elements, t_scene scene);
 
-void	assign_pl(char **elements, t_scene *scene);
-void	assign_sp(char **elements, t_scene *scene);
-void	assign_cy(char **elements, t_scene *scene);
+void	assign_pl(char **elements, t_scene *scene, t_mrt_dat *dat);
+void	assign_sp(char **elements, t_scene *scene, t_mrt_dat *dat);
+void	assign_cy(char **elements, t_scene *scene, t_mrt_dat *dat);
 
 int		count_array_rows(void **arr);
 
-void	check_sym_unit(t_vec3 angle);
-void	check_unit(double ratio);
-void	check_colour_range(t_colour rgb);
-void	check_positive(double obj_dimensions);
-void	check_fov(int fov);
+void	check_sym_unit(t_vec3 angle, t_mrt_dat *dat);
+void	check_unit(double ratio, t_mrt_dat *dat);
+void	check_colour_range(t_colour rgb, t_mrt_dat *dat);
+void	check_positive(double obj_dimensions, t_mrt_dat *dat);
+void	check_fov(int fov, t_mrt_dat *dat);
 
 #endif //MINIRT_H
