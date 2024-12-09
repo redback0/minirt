@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:43:37 by nlehmeye          #+#    #+#             */
-/*   Updated: 2024/12/09 13:27:09 by njackson         ###   ########.fr       */
+/*   Updated: 2024/12/09 14:04:21 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	main(int argc, char **argv)
 		ft_err("Incorrect Number of Arguments", &dat, NULL);
 	parse_input(argv[1], &dat.scene, &dat);
 	get_mlx_dat(&dat);
+	init_camera(&dat.scene.cam);
+	get_all_pixels(&dat, raytrace_pixel);
 	mlx_put_image_to_window(dat.mlx.mlxptr, dat.mlx.winptr, dat.mlx.img.img,
 		0, 0);
 	mlx_hook(dat.mlx.winptr, 17, 1L << 5, &window_closed, &dat);
