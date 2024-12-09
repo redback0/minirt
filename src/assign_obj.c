@@ -17,7 +17,7 @@ int	assign_pl(char **elements, t_scene *scene)
 	t_obj	*plane;
 	t_list	*obj;
 	int		err;
-	
+
 	err = 0;
 	plane = malloc(sizeof(*plane));
 	if (!plane)
@@ -69,6 +69,7 @@ int	assign_sp(char **elements, t_scene *scene)
 	err += assign_colour(elements[3], &sphere->colour);
 	return (err);
 }
+
 int	assign_cy(char **elements, t_scene *scene)
 {
 	t_obj	*cylinder;

@@ -52,6 +52,7 @@ int	id_assign(char *line, t_scene *scene)
 	ft_split_free(elements, free);
 	return (err);
 }
+
 void	id_assign_assist(char **elements, t_scene *scene, int *err)
 {
 	printf("id_assign_assist\n\n\n");
@@ -79,12 +80,12 @@ void	id_assign_assist(char **elements, t_scene *scene, int *err)
 int	count_array_rows(void **arr)
 {
 	int	total_rows;
-	
+
 	total_rows = 0;
 	while (*arr != NULL)
 	{
 		total_rows++;
 		arr++;
 	}
-	return(total_rows);
+	return (total_rows);
 }

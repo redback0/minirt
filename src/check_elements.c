@@ -14,7 +14,8 @@
 
 int	check_sym_unit(t_vec3 angle)
 {
-	if ((angle.x < -1 || angle.x > 1) ||(angle.y < -1 || angle.y > 1) || (angle.z < -1 || angle.z > 1))
+	if ((angle.x < -1 || angle.x > 1) || (angle.y < -1 || angle.y > 1)
+		|| (angle.z < -1 || angle.z > 1))
 	{
 		ft_printf("Error\nAngle outside symmetrical unit range.\n");
 		return (1);
@@ -34,7 +35,8 @@ int	check_unit(double ratio)
 
 int	check_colour_range(t_colour rgb)
 {
-	if ((rgb.red < 0 || rgb.red > 255) || (rgb.green < 0 || rgb.green > 255) || (rgb.blue < 0 || rgb.blue > 255))
+	if ((rgb.red < 0 || rgb.red > 255) || (rgb.green < 0
+			|| rgb.green > 255) || (rgb.blue < 0 || rgb.blue > 255))
 	{
 		ft_printf("Error\nRBG outside 0-255 range.\n");
 		return (1);

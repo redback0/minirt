@@ -27,7 +27,7 @@ int	assign_a(char **elements, t_scene *scene)
 	alight.ratio = ft_atod_strict(elements[1], &err);
 	if (err != 0)
 		printf("Error\n atod Error in attempt to assign A.\n");
-	err += check_unit(alight.ratio)!= 0;
+	err += check_unit(alight.ratio);
 	err += assign_colour(elements[2], &alight.colour);
 	return (err);
 }
@@ -56,7 +56,7 @@ int	assign_c(char **elements, t_scene *scene)
 
 int	assign_l(char **elements, t_scene *scene)
 {
-	t_light light;
+	t_light	light;
 	int		err;
 
 	err = 0;
@@ -74,6 +74,7 @@ int	assign_l(char **elements, t_scene *scene)
 	err += assign_colour(elements[3], &light.colour);
 	return (err);
 }
+
 int	assign_vector(char *elementinfo, t_vec3 *vector)
 {
 	char	**xyz;
@@ -93,9 +94,9 @@ int	assign_vector(char *elementinfo, t_vec3 *vector)
 	if (static_err != 0)
 	{
 		printf("Error\natod Error in attempt to assign vector.\n");
-		return(1);
+		return (1);
 	}
-	return(0);
+	return (0);
 }
 
 int	assign_colour(char *elementinfo, t_colour *rgb)
@@ -118,7 +119,7 @@ int	assign_colour(char *elementinfo, t_colour *rgb)
 	if (static_err != 0)
 	{
 		printf("Error\natoi Error in attempt to assign colour.\n");
-		return(1);
+		return (1);
 	}
 	return (0);
 }
