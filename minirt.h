@@ -85,8 +85,8 @@ typedef struct s_cam
 // an enum for defining what type of object is stored in the struct below
 typedef enum e_obj_id
 {
-	SPHERE,
 	PLANE,
+	SPHERE,
 	CYLINDER
 }	t_obj_id;
 
@@ -172,27 +172,29 @@ int		key_hook(int key, t_mrt_dat *dat);
 
 // file parsing functions
 int 	test_main(void);
-void	ft_err(char *err_msg, t_mrt_dat *dat);
+void	ft_free(t_mrt_dat *dat, char *line);
+void	free_list_obj(t_list *objs);
+void	ft_err(char *err_msg, t_mrt_dat *dat, char *line);
 void	parse_input(const char *file, t_scene *scene, t_mrt_dat *dat);
 void	id_assign(char *line, t_scene *scene, t_mrt_dat *dat);
-void	assign_vector(char *elementinfo, t_vec3 *vector, t_mrt_dat *dat);
-void	assign_colour(char *elementinfo, t_colour *rgb, t_mrt_dat *dat);
-void	assign_A(char **elements, t_scene *scene, t_mrt_dat *dat);
-void	assign_C(char **elements, t_scene *scene, t_mrt_dat *dat);
-void	assign_L(char **elements, t_scene *scene, t_mrt_dat *dat);
+void	assign_vector(char *elementinfo, t_vec3 *vector, t_mrt_dat *dat, char *line);
+void	assign_colour(char *elementinfo, t_colour *rgb, t_mrt_dat *dat, char *line);
+void	assign_A(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
+void	assign_C(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
+void	assign_L(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
 
 // t_obj	*assign_pl(char **elements, t_scene scene);
 
-void	assign_pl(char **elements, t_scene *scene, t_mrt_dat *dat);
-void	assign_sp(char **elements, t_scene *scene, t_mrt_dat *dat);
-void	assign_cy(char **elements, t_scene *scene, t_mrt_dat *dat);
+void	assign_pl(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
+void	assign_sp(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
+void	assign_cy(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
 
 int		count_array_rows(void **arr);
 
-void	check_sym_unit(t_vec3 angle, t_mrt_dat *dat);
-void	check_unit(double ratio, t_mrt_dat *dat);
-void	check_colour_range(t_colour rgb, t_mrt_dat *dat);
-void	check_positive(double obj_dimensions, t_mrt_dat *dat);
-void	check_fov(int fov, t_mrt_dat *dat);
+void	check_sym_unit(t_vec3 angle, t_mrt_dat *dat, char *line);
+void	check_unit(double ratio, t_mrt_dat *dat, char *line);
+void	check_colour_range(t_colour rgb, t_mrt_dat *dat, char *line);
+void	check_positive(double obj_dimensions, t_mrt_dat *dat, char *line);
+void	check_fov(int fov, t_mrt_dat *dat, char *line);
 
 #endif //MINIRT_H
