@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:01:41 by njackson          #+#    #+#             */
-/*   Updated: 2024/11/28 13:08:05 by njackson         ###   ########.fr       */
+/*   Updated: 2024/12/09 13:34:34 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	key_hook(int key, t_mrt_dat *dat)
 	if (key == K_ESCAPE)
 	{
 		cleanup_mlx(&dat->mlx);
-		// cleanup_scene(&dat->scene);
+		ft_free(dat, NULL);
 		exit(0);
 	}
 	return (0);
