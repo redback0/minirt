@@ -12,51 +12,113 @@
 
 #include "minirt.h"
 
-void	assign_A(char **elements, t_scene *scene, t_mrt_dat *dat, char *line)
+int	assign_a(char **elements, t_scene *scene)
 {
 	t_alight	alight;
+	int			err;
 
+	err = 0;
 	alight = scene->alight;
 	if (count_array_rows((void **)elements) != 3)
-		return (ft_err("Incorrect number of element A info.", dat, line));
-	alight.ratio = ft_atod(elements[1]);
-	check_unit(alight.ratio, dat, line);
-	assign_colour(elements[2], &alight.colour, dat, line);
-	// printf("%s\n", elements[0]);
-	// printf("BRIGHTNESS:   %f\n", alight.ratio);
-	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", alight.colour.red, alight.colour.green, alight.colour.blue);
+	{
+		printf("Error\nIncorrect number of element A info.\n");
+		return (1);
+	}
+	alight.ratio = ft_atod_strict(elements[1], &err);
+	if (err != 0)
+		printf("Error\n atod Error in attempt to assign A.\n");
+	err += check_unit(alight.ratio)!= 0;
+	err += assign_colour(elements[2], &alight.colour);
+	return (err);
 }
 
-void	assign_C(char **elements, t_scene *scene, t_mrt_dat *dat, char *line)
+int	assign_c(char **elements, t_scene *scene)
 {
 	t_cam	camera;
+	int		err;
 
+	err = 0;
 	camera = scene->cam;
 	if (count_array_rows((void **)elements) != 4)
-		return (ft_err("Incorrect number of element C info.", dat, line));
-	assign_vector(elements[1], &camera.pos, dat, line);
-	assign_vector(elements[2], &camera.angle, dat, line);
-	check_sym_unit(camera.angle, dat, line);
-	camera.fov = ft_atoi(elements[3]);
-	check_fov(camera.fov, dat, line);
-	// printf("POSITION: %f\n %f\n %f\n\n", camera.pos.x, camera.pos.y, camera.pos.z);
-	// printf("ANGLE: %f\n %f\n %f\n\n", camera.angle.x, camera.angle.y, camera.angle.z);
-	// printf("FOV: %d\n\n", camera.fov);
+	{
+		printf("Error\n Incorrect number of element C info.\n");
+		return (1);
+	}
+	err += assign_vector(elements[1], &camera.pos);
+	err += assign_vector(elements[2], &camera.angle);
+	err += check_sym_unit(camera.angle);
+	camera.fov = ft_atoi_strict(elements[3], &err);
+	if (err != 0)
+		printf("Error\n atod Error in attempt to assign C.\n");
+	err += check_fov(camera.fov);
+	return (err);
 }
 
-void	assign_L(char **elements, t_scene *scene, t_mrt_dat *dat, char *line)
+int	assign_l(char **elements, t_scene *scene)
 {
 	t_light light;
+	int		err;
 
+	err = 0;
 	light = scene->light;
 	if (count_array_rows((void **)elements) != 4)
-		return (ft_err("Incorrect number of element L info.", dat, line));
-	assign_vector(elements[1], &light.pos, dat, line);
-	light.ratio = ft_atod(elements[2]);
-	check_unit(light.ratio, dat, line);
-	assign_colour(elements[3], &light.colour, dat, line);
-	// printf("%s\n", elements[0]);
-	// printf("POSITION:   X: %f, Y: %f, Z: %f", light.pos.x, light.pos.y, light.pos.z);
-	// printf("BRIGHTNESS:   %f\n", light.ratio);
-	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", light.colour.red, light.colour.green, light.colour.blue);
+	{
+		printf("Error\n Incorrect number of element L info.\n");
+		return (1);
+	}
+	err += assign_vector(elements[1], &light.pos);
+	light.ratio = ft_atod_strict(elements[2], &err);
+	if (err != 0)
+		printf("Error\n atod Error in attempt to assign L.\n");
+	err += check_unit(light.ratio);
+	err += assign_colour(elements[3], &light.colour);
+	return (err);
+}
+int	assign_vector(char *elementinfo, t_vec3 *vector)
+{
+	char	**xyz;
+	int		static_err;
+
+	static_err = 0;
+	xyz = ft_split(elementinfo, ',');
+	if (count_array_rows((void **)xyz) != 3)
+	{
+		printf("Error\nIncorrect voctor format.\n");
+		return (1);
+	}
+	vector->x = ft_atod_strict(xyz[0], &static_err);
+	vector->y = ft_atod_strict(xyz[1], &static_err);
+	vector->z = ft_atod_strict(xyz[2], &static_err);
+	ft_split_free(xyz, free);
+	if (static_err != 0)
+	{
+		printf("Error\natod Error in attempt to assign vector.\n");
+		return(1);
+	}
+	return(0);
+}
+
+int	assign_colour(char *elementinfo, t_colour *rgb)
+{
+	char	**colour_info;
+	int		static_err;
+
+	static_err = 0;
+	colour_info = ft_split(elementinfo, ',');
+	if (count_array_rows((void **)colour_info) != 3)
+	{
+		printf("Error\nIncorrect colour format.\n");
+		return (1);
+	}
+	rgb->red = ft_atoi_strict(colour_info[0], &static_err);
+	rgb->green = ft_atoi_strict(colour_info[1], &static_err);
+	rgb->blue = ft_atoi_strict(colour_info[2], &static_err);
+	check_colour_range(*rgb);
+	ft_split_free(colour_info, free);
+	if (static_err != 0)
+	{
+		printf("Error\natoi Error in attempt to assign colour.\n");
+		return(1);
+	}
+	return (0);
 }

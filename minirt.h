@@ -170,31 +170,36 @@ void	get_all_pixels(t_mrt_dat *dat,
 			t_colour (*pixel_func)(t_mrt_dat *, int, int));
 int		key_hook(int key, t_mrt_dat *dat);
 
-// file parsing functions
+//  ** main.c ** //
 int 	test_main(void);
-void	ft_free(t_mrt_dat *dat, char *line);
 void	free_list_obj(t_list *objs);
-void	ft_err(char *err_msg, t_mrt_dat *dat, char *line);
-void	parse_input(const char *file, t_scene *scene, t_mrt_dat *dat);
-void	id_assign(char *line, t_scene *scene, t_mrt_dat *dat);
-void	assign_vector(char *elementinfo, t_vec3 *vector, t_mrt_dat *dat, char *line);
-void	assign_colour(char *elementinfo, t_colour *rgb, t_mrt_dat *dat, char *line);
-void	assign_A(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
-void	assign_C(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
-void	assign_L(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
 
-// t_obj	*assign_pl(char **elements, t_scene scene);
-
-void	assign_pl(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
-void	assign_sp(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
-void	assign_cy(char **elements, t_scene *scene, t_mrt_dat *dat, char *line);
-
+//  ** parse_input.c ** //
+int		parse_input(const char *file, t_scene *scene);
+int		id_assign(char *line, t_scene *scene);
+void	id_assign_assist(char **elements, t_scene *scene, int *err);
 int		count_array_rows(void **arr);
 
-void	check_sym_unit(t_vec3 angle, t_mrt_dat *dat, char *line);
-void	check_unit(double ratio, t_mrt_dat *dat, char *line);
-void	check_colour_range(t_colour rgb, t_mrt_dat *dat, char *line);
-void	check_positive(double obj_dimensions, t_mrt_dat *dat, char *line);
-void	check_fov(int fov, t_mrt_dat *dat, char *line);
+// ** assign_ACL.c ** //
+int		assign_a(char **elements, t_scene *scene);
+int		assign_c(char **elements, t_scene *scene);
+int		assign_l(char **elements, t_scene *scene);
+int		assign_vector(char *elementinfo, t_vec3 *vector);
+int		assign_colour(char *elementinfo, t_colour *rgb);
+
+// ** assign_obj.c ** //
+int		assign_pl(char **elements, t_scene *scene);
+int		assign_sp(char **elements, t_scene *scene);
+int		assign_cy(char **elements, t_scene *scene);
+void	assign_cy_assist(char **elements, t_obj *cylinder, int *err);
+double	assign_obj_assist(char *element, int *err);
+
+
+// ** check_elements.c ** //
+int		check_unit(double ratio);
+int		check_colour_range(t_colour rgb);
+int		check_positive(double obj_dimensions);
+int		check_fov(int fov);
+int		check_sym_unit(t_vec3 angle);
 
 #endif //MINIRT_H

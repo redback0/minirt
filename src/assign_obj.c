@@ -12,31 +12,36 @@
 
 #include "minirt.h"
 
-void	assign_pl(char **elements, t_scene *scene, t_mrt_dat *dat, char *line)
+int	assign_pl(char **elements, t_scene *scene)
 {
 	t_obj	*plane;
 	t_list	*obj;
+	int		err;
 	
+	err = 0;
 	plane = malloc(sizeof(*plane));
 	if (!plane)
-		return (ft_err("Plane Malloc Failed.", dat, line));
+	{
+		printf("Error\nPlane Malloc Failed.\n");
+		return (1);
+	}
 	obj = ft_lstnew((void *)plane);
 	ft_lstadd_front(&scene->objs, obj);
 	ft_bzero(plane, sizeof(*plane));
 	if (count_array_rows((void **)elements) != 4)
-		return (ft_err("Incorrect number of element pl info.", dat, line));
+	{
+		printf("Error\nIncorrect number of element pl info.\n");
+		return (1);
+	}
 	plane->id = PLANE;
-	assign_vector(elements[1], &plane->pos, dat, line);
-	assign_vector(elements[2], &plane->angle, dat, line);
-	check_sym_unit(plane->angle, dat, line);
-	assign_colour(elements[3], &plane->colour, dat, line);
-	// printf("%s\n", elements[0]);
-	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", plane->pos.x, plane->pos.y, plane->pos.z);
-	// printf("ANGLE:   X: %f, Y: %f, Z: %f\n", plane->angle.x, plane->angle.y, plane->angle.z);
-	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", plane->colour.red, plane->colour.green, plane->colour.blue);
+	err += assign_vector(elements[1], &plane->pos);
+	err += assign_vector(elements[2], &plane->angle);
+	err += check_sym_unit(plane->angle);
+	err += assign_colour(elements[3], &plane->colour);
+	return (err);
 }
 
-void	assign_sp(char **elements, t_scene *scene, t_mrt_dat *dat, char *line)
+int	assign_sp(char **elements, t_scene *scene)
 {
 	t_obj	*sphere;
 	t_list	*obj;
@@ -45,26 +50,26 @@ void	assign_sp(char **elements, t_scene *scene, t_mrt_dat *dat, char *line)
 	err = 0;
 	sphere = malloc(sizeof(*sphere));
 	if (!sphere)
-		return (ft_err("Sphere Malloc Failed.", dat, line));
+	{
+		printf("Error\nSphere Malloc Failed.\n");
+		return (1);
+	}
 	obj = ft_lstnew((void *)sphere);
 	ft_lstadd_front(&scene->objs, obj);
 	ft_bzero(sphere, sizeof(*sphere));
 	if (count_array_rows((void **)elements) != 4)
-		return (ft_err("Incorrect number of element sp info", dat, line));
+	{
+		printf("Error\nIncorrect number of element sp info.\n");
+		return (1);
+	}
 	sphere->id = SPHERE;
-	assign_vector(elements[1], &sphere->pos, dat, line);
-	sphere->diameter = ft_atod_strict(elements[2], &err);
-	check_positive(sphere->diameter, dat, line);
-	assign_colour(elements[3], &sphere->colour, dat, line);
-	if (err != 0)
-		return (ft_err("atod Error in attempt to assign sphere.", dat, line));
-	// printf("%s\n", elements[0]);
-	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", sphere->pos.x, sphere->pos.y, sphere->pos.z);
-	// printf("DIAMETER:  %f\n", sphere.diameter);
-	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", sphere->colour.red, sphere->colour.green, sphere->colour.blue);
+	err += assign_vector(elements[1], &sphere->pos);
+	sphere->diameter = assign_obj_assist(elements[2], &err);
+	err += check_positive(sphere->diameter);
+	err += assign_colour(elements[3], &sphere->colour);
+	return (err);
 }
-
-void	assign_cy(char **elements, t_scene *scene, t_mrt_dat *dat, char *line)
+int	assign_cy(char **elements, t_scene *scene)
 {
 	t_obj	*cylinder;
 	t_list	*obj;
@@ -73,27 +78,46 @@ void	assign_cy(char **elements, t_scene *scene, t_mrt_dat *dat, char *line)
 	err = 0;
 	cylinder = malloc(sizeof(*cylinder));
 	if (!cylinder)
-		return (ft_err("Cylinder Malloc Failed.", dat, line));
+	{
+		printf("Error\nCylinder Malloc Failed.\n");
+		return (1);
+	}
 	obj = ft_lstnew((void *)cylinder);
 	ft_lstadd_front(&scene->objs, obj);
 	ft_bzero(cylinder, sizeof(*cylinder));
 	if (count_array_rows((void **)elements) != 6)
-		return (ft_err("Incorrect number of element cy info", dat, line));
+	{
+		printf("Error\nIncorrect number of element cy info\n");
+		return (1);
+	}
 	cylinder->id = CYLINDER;
-	assign_vector(elements[1], &cylinder->pos, dat, line);
-	assign_vector(elements[2], &cylinder->angle, dat, line);
-	check_sym_unit(cylinder->angle, dat, line);
-	cylinder->diameter = ft_atod_strict(elements[3], &err);
-	check_positive(cylinder->diameter, dat, line);
-	cylinder->height = ft_atod_strict(elements[4], &err);
-	check_positive(cylinder->height, dat, line);
-	assign_colour(elements[5], &cylinder->colour, dat, line);
-	if (err != 0)
-		return (ft_err("atod Error in attempt to assign cylinder.", dat, line));
-	// printf("%s\n", elements[0]);
-	// printf("POSITION:   X: %f, Y: %f, Z: %f\n", cylinder.pos.x, cylinder.pos.y, cylinder.pos.z);
-	// printf("ANGLE:   X: %f, Y: %f, Z: %f\n", cylinder.angle.x, cylinder.angle.y, cylinder.angle.z);
-	// printf("DIAMETER:  %f\n", cylinder.diameter);
-	// printf("HEIGHT:  %f\n", cylinder.height);
-	// printf("COLOUR:   R: %d, G: %d, B: %d\n\n", cylinder.colour.red, cylinder.colour.green, cylinder.colour.blue);
+	cylinder->diameter = assign_obj_assist(elements[3], &err);
+	cylinder->height = assign_obj_assist(elements[4], &err);
+	assign_cy_assist(elements, cylinder, &err);
+	return (err);
+}
+
+void	assign_cy_assist(char **elements, t_obj *cylinder, int *err)
+{
+	*err += assign_vector(elements[1], &cylinder->pos);
+	*err += assign_vector(elements[2], &cylinder->angle);
+	*err += check_sym_unit(cylinder->angle);
+	*err += check_positive(cylinder->diameter);
+	*err += check_positive(cylinder->height);
+	*err += assign_colour(elements[5], &cylinder->colour);
+}
+
+double	assign_obj_assist(char *element, int *err)
+{
+	int		obj_err;
+	double	obj_dimension;
+
+	obj_err = 0;
+	obj_dimension = ft_atod_strict(element, &obj_err);
+	if (obj_err != 0)
+	{
+		printf("Error\natod Error in attempt to assign object.\n");
+		(*err)++;
+	}
+	return (obj_dimension);
 }

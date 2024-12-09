@@ -34,7 +34,7 @@ int	key_hook(int key, t_mrt_dat *dat)
 	if (key == K_ESCAPE)
 	{
 		cleanup_mlx(&dat->mlx);
-		ft_free(dat, NULL);
+		ft_lstclear(&(dat->scene.objs), free);
 		exit(0);
 	}
 	return (0);

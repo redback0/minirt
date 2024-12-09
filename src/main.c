@@ -12,25 +12,9 @@
 
 #include "minirt.h"
 
-void	ft_err(char *err_msg, t_mrt_dat *dat, char *line)
-{
-	ft_printf("Error:\n%s\n", err_msg);
-	ft_free(dat, line);
-	exit(1);
-}
-
-//FUNCTION THAT FREES EVERYTHING
-void	ft_free(t_mrt_dat *dat, char *line)
-{
-	if (line)
-		free(line);
-	if (dat->scene.objs)
-		ft_lstclear(&(dat->scene.objs), free);
-}
-
 int	window_closed(t_mrt_dat *dat)
 {
-	ft_free(dat, NULL);
+	ft_lstclear(&(dat->scene.objs), free);
 	cleanup_mlx(&(dat->mlx));
 	exit(0);
 }
@@ -38,12 +22,19 @@ int	window_closed(t_mrt_dat *dat)
 int	main(int argc, char **argv)
 {
 	t_mrt_dat	dat;
+	int			err;
 
+	err = 0;
 	ft_bzero(&dat, sizeof(dat));
 	(void)argv;
 	if (argc != 2)
-		ft_err("Incorrect Number of Arguments", &dat, NULL);
-	parse_input(argv[1], &dat.scene, &dat);
+	{
+		printf("Error\nIncorrect Number of Arguments.\n");
+		return (1);
+	}
+	parse_input(argv[1], &dat.scene);
+	if (err != 0)
+		ft_lstclear(&(dat.scene.objs), free);
 	get_mlx_dat(&dat);
 	mlx_put_image_to_window(dat.mlx.mlxptr, dat.mlx.winptr, dat.mlx.img.img,
 		0, 0);
@@ -51,3 +42,16 @@ int	main(int argc, char **argv)
 	mlx_loop(dat.mlx.mlxptr);
 	return (0);
 }
+
+
+// int err;
+
+// err = 0;
+// err += firstfunction();
+// err += secondfunction();
+// err += thirdfunction();
+
+// return (err);
+
+// if (err != 0)
+// ft_free()

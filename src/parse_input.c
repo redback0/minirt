@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-void	parse_input(const char *file, t_scene *scene, t_mrt_dat *dat)
+int	parse_input(const char *file, t_scene *scene)
 {
 	int		fd;
 	char	*line;
@@ -20,79 +20,60 @@ void	parse_input(const char *file, t_scene *scene, t_mrt_dat *dat)
 	line = NULL;
 	fd = open(file, O_RDONLY, 0);
 	if (fd == -1)
-		ft_err("Open file error", dat, NULL);
+	{
+		ft_printf("Error:\nOpen file error\n");
+		return (1);
+	}
 	line = get_next_line(fd);
 	while (line)
 	{
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
-		id_assign(line, scene, dat);
+		if (id_assign(line, scene) != 0)
+		{
+			free(line);
+			return (1);
+		}
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
+	return (0);
 }
 
-void	id_assign(char *line, t_scene *scene, t_mrt_dat *dat)
+int	id_assign(char *line, t_scene *scene)
 {
 	char	**elements;
+	int		err;
 
+	err = 0;
 	elements = ft_split(line, ' ');
-	if (!elements || !elements[0] || elements[0][0] == '\n')
-	{
-		free(elements);
-		return ;
-	}
-	else if (!ft_strncmp(elements[0], "A", 1))
-		assign_A(elements, scene, dat, line);
-	else if (!ft_strncmp(elements[0], "C", 1))
-		assign_C(elements, scene, dat, line);
-	else if (!ft_strncmp(elements[0], "L", 1))
-		assign_L(elements, scene, dat, line);
-	else if (!ft_strncmp(elements[0], "pl", 2))
-		assign_pl(elements, scene, dat, line);
-	else if (!ft_strncmp(elements[0], "sp", 2))
-		assign_sp(elements, scene, dat, line);
-	else if (!ft_strncmp(elements[0], "cy", 2))
-		assign_cy(elements, scene, dat, line);
-	else
-		ft_err("Non-element type present in .rt file.", dat, line);
+	id_assign_assist(elements, scene, &err);
 	ft_split_free(elements, free);
+	return (err);
 }
-
-void	assign_vector(char *elementinfo, t_vec3 *vector, t_mrt_dat *dat, char *line)
+void	id_assign_assist(char **elements, t_scene *scene, int *err)
 {
-	char	**xyz;
-	int		err;
-
-	err = 0;
-	xyz = ft_split(elementinfo, ',');
-	if (count_array_rows((void **)xyz) != 3)
-		return (ft_err("Incorrect vector format.", dat, line));
-	vector->x = ft_atod_strict(xyz[0], &err);
-	vector->y = ft_atod_strict(xyz[1], &err);
-	vector->z = ft_atod_strict(xyz[2], &err);
-	ft_split_free(xyz, free);
-	if (err != 0)
-		return (ft_err("atod Error in attempt to assign vector.", dat, line));
-}
-
-void	assign_colour(char *elementinfo, t_colour *rgb, t_mrt_dat *dat, char *line)
-{
-	char	**colour_info;
-	int		err;
-
-	err = 0;
-	colour_info = ft_split(elementinfo, ',');
-	if (count_array_rows((void **)colour_info) != 3)
-		return (ft_err("Incorrect colour format.", dat, line));
-	rgb->red = ft_atoi_strict(colour_info[0], &err);
-	rgb->green = ft_atoi_strict(colour_info[1], &err);
-	rgb->blue = ft_atoi_strict(colour_info[2], &err);
-	check_colour_range(*rgb, dat, line);
-	ft_split_free(colour_info, free);
-	if (err != 0)
-		return (ft_err("atoi Error in attempt to assign colour.", dat, line));
+	printf("id_assign_assist\n\n\n");
+	if (!elements || !elements[0] || elements[0][0] == '\n')
+		;
+	else if (!ft_strncmp(elements[0], "A", 1))
+		*err += assign_a(elements, scene);
+	else if (!ft_strncmp(elements[0], "C", 1))
+		*err += assign_c(elements, scene);
+	else if (!ft_strncmp(elements[0], "L", 1))
+		*err += assign_l(elements, scene);
+	else if (!ft_strncmp(elements[0], "pl", 2))
+		*err += assign_pl(elements, scene);
+	else if (!ft_strncmp(elements[0], "sp", 2))
+		*err += assign_sp(elements, scene);
+	else if (!ft_strncmp(elements[0], "cy", 2))
+		*err += assign_cy(elements, scene);
+	else
+	{
+		ft_printf("Error:\nNon-element type present in .rt file.\n");
+		(*err)++;
+	}
 }
 
 int	count_array_rows(void **arr)

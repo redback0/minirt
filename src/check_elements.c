@@ -12,32 +12,52 @@
 
 #include "minirt.h"
 
-void	check_sym_unit(t_vec3 angle, t_mrt_dat *dat, char *line)
+int	check_sym_unit(t_vec3 angle)
 {
 	if ((angle.x < -1 || angle.x > 1) ||(angle.y < -1 || angle.y > 1) || (angle.z < -1 || angle.z > 1))
-		return (ft_err("Angle outside symmetrical unit range.", dat, line));
+	{
+		ft_printf("Error\nAngle outside symmetrical unit range.\n");
+		return (1);
+	}
+	return (0);
 }
 
-void	check_unit(double ratio, t_mrt_dat *dat, char *line)
+int	check_unit(double ratio)
 {
 	if ((ratio < 0 || ratio > 1))
-		return (ft_err("Ratio outside unit range.", dat, line));
+	{
+		ft_printf("Error\nRatio outside unit range.\n");
+		return (1);
+	}
+	return (0);
 }
 
-void	check_colour_range(t_colour rgb, t_mrt_dat *dat, char *line)
+int	check_colour_range(t_colour rgb)
 {
 	if ((rgb.red < 0 || rgb.red > 255) || (rgb.green < 0 || rgb.green > 255) || (rgb.blue < 0 || rgb.blue > 255))
-		return (ft_err("RBG outside 0-255 range.", dat, line));
+	{
+		ft_printf("Error\nRBG outside 0-255 range.\n");
+		return (1);
+	}
+	return (0);
 }
 
-void	check_positive(double obj_dimensions, t_mrt_dat *dat, char *line)
+int	check_positive(double obj_dimensions)
 {
 	if (obj_dimensions <= 0)
-		return (ft_err("Object dimension values not positive.", dat, line));
+	{
+		ft_printf("Error\nObject dimension values not positive.\n");
+		return (1);
+	}
+	return (0);
 }
 
-void	check_fov(int fov, t_mrt_dat *dat, char *line)
+int	check_fov(int fov)
 {
 	if (fov < 0 || fov > 180)
-		return (ft_err("FOV outside range.", dat, line));
+	{
+		ft_printf("Error\nFOV outside range.\n");
+		return (1);
+	}
+	return (0);
 }
