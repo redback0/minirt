@@ -69,7 +69,7 @@ void	assign_vector(char *elementinfo, t_vec3 *vector, t_mrt_dat *dat, char *line
 	vector->x = ft_atod_strict(xyz[0], &err);
 	vector->y = ft_atod_strict(xyz[1], &err);
 	vector->z = ft_atod_strict(xyz[2], &err);
-	ft_split_free(&elementinfo, free);
+	ft_split_free(xyz, free);
 	if (err != 0)
 		return (ft_err("atod Error in attempt to assign vector.", dat, line));
 }
@@ -87,7 +87,7 @@ void	assign_colour(char *elementinfo, t_colour *rgb, t_mrt_dat *dat, char *line)
 	rgb->green = ft_atoi_strict(colour_info[1], &err);
 	rgb->blue = ft_atoi_strict(colour_info[2], &err);
 	check_colour_range(*rgb, dat, line);
-	ft_split_free(&elementinfo, free);
+	ft_split_free(colour_info, free);
 	if (err != 0)
 		return (ft_err("atoi Error in attempt to assign colour.", dat, line));
 }
