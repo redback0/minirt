@@ -13,6 +13,7 @@ FILES :=	main \
 			check_elements \
 			vectors \
 			vectors_ext \
+			raytrace_pixel \
 
 
 #mrt_mlx_test
