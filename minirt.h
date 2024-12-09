@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/12/04 11:04:24 by njackson         ###   ########.fr       */
+/*   Updated: 2024/12/09 14:03:42 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ typedef struct s_cam
 	t_pos	pos;
 	t_pos	angle;
 	int		fov;
+	double	psin;
+	double	pcos;
+	double	ysin;
+	double	ycos;
+	double	rect_dist;
 }	t_cam;
 
 // an enum for defining what type of object is stored in the struct below
@@ -153,6 +158,10 @@ typedef struct s_intersect
 	t_point	point;
 	t_obj	*obj;
 }	t_intersect;
+
+// camera functions
+void	init_camera(t_cam *cam);
+t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y);
 
 // vector math functions -- detailed in doc
 double	vec3_dot_product(t_vec3 vec1, t_vec3 vec2);
