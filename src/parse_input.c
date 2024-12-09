@@ -39,7 +39,10 @@ void	id_assign(char *line, t_scene *scene, t_mrt_dat *dat)
 
 	elements = ft_split(line, ' ');
 	if (!elements || !elements[0] || elements[0][0] == '\n')
+	{
+		free(elements);
 		return ;
+	}
 	else if (!ft_strncmp(elements[0], "A", 1))
 		assign_A(elements, scene, dat, line);
 	else if (!ft_strncmp(elements[0], "C", 1))
