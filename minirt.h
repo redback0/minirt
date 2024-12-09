@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/12/04 11:04:24 by njackson         ###   ########.fr       */
+/*   Updated: 2024/12/06 13:46:26 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,11 @@ typedef struct s_cam
 	t_pos	pos;
 	t_pos	angle;
 	int		fov;
+	double	psin;
+	double	pcos;
+	double	ysin;
+	double	ycos;
+	double	rect_dist;
 }	t_cam;
 
 // an enum for defining what type of object is stored in the struct below
