@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 LEAK_CHECK='valgrind --log-file=/dev/null --leak-check=full --show-leak-kinds=all ./miniRT'
 

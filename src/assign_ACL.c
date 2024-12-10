@@ -69,7 +69,7 @@ int	assign_l(char **elements, t_scene *scene)
 	err += assign_vector(elements[1], &light.pos);
 	light.ratio = ft_atod_strict(elements[2], &err);
 	if (err != 0)
-		printf("Error\n atod Error in attempt to assign L.\n");
+		printf("Error\natod Error in attempt to assign L.\n");
 	err += check_unit(light.ratio);
 	err += assign_colour(elements[3], &light.colour);
 	return (err);
@@ -84,6 +84,7 @@ int	assign_vector(char *elementinfo, t_vec3 *vector)
 	if (count_array_rows((void **)xyz) != 3)
 	{
 		printf("Error\nIncorrect voctor format.\n");
+		ft_split_free(xyz, free);
 		return (1);
 	}
 	vector->x = ft_atod_strict(xyz[0], &static_err);
@@ -108,6 +109,7 @@ int	assign_colour(char *elementinfo, t_colour *rgb)
 	if (count_array_rows((void **)colour_info) != 3)
 	{
 		printf("Error\nIncorrect colour format.\n");
+		ft_split_free(colour_info, free);
 		return (1);
 	}
 	rgb->red = ft_atoi_strict(colour_info[0], &static_err);

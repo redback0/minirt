@@ -16,8 +16,10 @@ int	parse_input(const char *file, t_scene *scene)
 {
 	int		fd;
 	char	*line;
+	int		gnl_err;
 
 	line = NULL;
+	gnl_err = 0;
 	fd = open(file, O_RDONLY, 0);
 	if (fd == -1)
 	{
@@ -29,11 +31,7 @@ int	parse_input(const char *file, t_scene *scene)
 	{
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
-		if (id_assign(line, scene) != 0)
-		{
-			free(line);
-			return (1);
-		}
+		gnl_err += id_assign(line, scene);
 		free(line);
 		line = get_next_line(fd);
 	}

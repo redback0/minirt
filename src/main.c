@@ -47,16 +47,3 @@ int	main(int argc, char **argv)
 	mlx_loop(dat.mlx.mlxptr);
 	return (0);
 }
-
-
-// int err;
-
-// err = 0;
-// err += firstfunction();
-// err += secondfunction();
-// err += thirdfunction();
-
-// return (err);
-
-// if (err != 0)
-// ft_free()
