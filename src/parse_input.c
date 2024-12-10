@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:43:03 by nlehmeye          #+#    #+#             */
-/*   Updated: 2024/12/03 20:25:35 by njackson         ###   ########.fr       */
+/*   Updated: 2024/12/11 09:19:33 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	id_assign(char *line, t_scene *scene)
 }
 void	id_assign_assist(char **elements, t_scene *scene, int *err)
 {
-	printf("id_assign_assist\n\n\n");
 	if (!elements || !elements[0] || elements[0][0] == '\n')
 		;
 	else if (!ft_strncmp(elements[0], "A", 1))
