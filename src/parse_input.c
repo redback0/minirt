@@ -36,7 +36,7 @@ int	parse_input(const char *file, t_scene *scene)
 		line = get_next_line(fd);
 	}
 	close(fd);
-	return (0);
+	return (gnl_err);
 }
 
 int	id_assign(char *line, t_scene *scene)

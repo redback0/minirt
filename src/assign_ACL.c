@@ -83,7 +83,7 @@ int	assign_vector(char *elementinfo, t_vec3 *vector)
 	xyz = ft_split(elementinfo, ',');
 	if (count_array_rows((void **)xyz) != 3)
 	{
-		printf("Error\nIncorrect voctor format.\n");
+		printf("Error\nIncorrect vector format.\n");
 		ft_split_free(xyz, free);
 		return (1);
 	}
