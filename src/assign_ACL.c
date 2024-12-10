@@ -115,7 +115,7 @@ int	assign_colour(char *elementinfo, t_colour *rgb)
 	rgb->red = ft_atoi_strict(colour_info[0], &static_err);
 	rgb->green = ft_atoi_strict(colour_info[1], &static_err);
 	rgb->blue = ft_atoi_strict(colour_info[2], &static_err);
-	check_colour_range(*rgb);
+	static_err += check_colour_range(*rgb);
 	ft_split_free(colour_info, free);
 	if (static_err != 0)
 	{
