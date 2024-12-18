@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/12/09 14:03:42 by njackson         ###   ########.fr       */
+/*   Updated: 2024/12/18 13:22:04 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,8 @@ typedef struct s_intersect
 {
 	t_point	point;
 	t_obj	*obj;
+	t_angle	normal;
+	double	cam_dist;
 }	t_intersect;
 
 // camera functions
