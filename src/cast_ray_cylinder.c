@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:23:38 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/08 16:50:17 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/08 18:44:46 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,32 +34,36 @@ t_intersect	cast_ray_cylinder(t_cylinder *obj,
 	double		dist; // distance from obj.pos along obj.angle
 	t_intersect	out;
 
-	/* x * /
+	/ * x * /
 	perp = vec3_cross_product(obj->angle, dir);
-	/* len(x) * /
+	/ * len(x) * /
 	sin_theta = sqrt(vec3_dot_product(perp, perp));
 	if (sin_theta == 0.0)
 		return ((t_intersect){.obj = NULL});
 
-	/* normalize(x) * /
+	/ * normalize(x) * /
 	out.normal = vec3_mult(perp, 1 / sin_theta);
 
 	local = vec3_add(obj->pos, vec3_inverse(start));
-	/* a * /
+	/ * a * /
 	dist_betw = vec3_dot_product(out.normal, local);
-	/* b * /
+	/ * b * /
 	remain = sqrt(pow((obj->diameter / 2), 2) - pow(dist_betw, 2));
 
-	/* m * /
+	/ * m * /
 	back = sqrt(1 - pow(sin_theta, 2)) * remain / sin_theta;
-	/* t * /
-	dist = (vec3_dot_product(vec3_cross_product(dir, perp), vec3_inverse(local)) / vec3_dot_product(perp, perp) - back);
+	/ * t * /
+	dist = (vec3_dot_product(vec3_cross_product(dir, perp), vec3_inverse(local))
+		/ vec3_dot_product(perp, perp) - back);
 	if (dist < -(obj->height / 2) || dist > obj->height / 2)
-		return ((t_intersect){.obj = NULL}); // need to check end cap, then other wall
-	/* i * /
+		return ((t_intersect){.obj = NULL});
+		// need to check end cap, then other wall
+	/ * i * /
 	out.point = vec3_add(vec3_add(obj->pos, vec3_mult(obj->angle, dist)),
-			vec3_add(vec3_mult(out.normal, dist_betw), vec3_mult(vec3_cross_product(out.normal, obj->angle), -remain)));
-	out.cam_dist = vec3_dot_product(vec3_cross_product(obj->angle, perp), vec3_inverse(local)) / vec3_dot_product(perp, perp);
+			vec3_add(vec3_mult(out.normal, dist_betw),
+			vec3_mult(vec3_cross_product(out.normal, obj->angle), -remain)));
+	out.cam_dist = vec3_dot_product(vec3_cross_product(obj->angle, perp)
+		vec3_inverse(local)) / vec3_dot_product(perp, perp);
 	if (out.cam_dist > max_dist)
 		return ((t_intersect){.obj = NULL});
 	out.obj = obj;
@@ -67,8 +71,42 @@ t_intersect	cast_ray_cylinder(t_cylinder *obj,
 }
 */
 
-/*
+// top is the cap on the positon, bottom is the cap at pos + (angle * height)
+static t_intersect	cast_ray_cylinder_caps(t_cylinder *obj, t_ray ray)
+{
+	t_intersect	out;
+	t_obj		phony;
+	t_vec3		relative;
+	int			is_top_first;
 
+	phony = *obj;
+	is_top_first = vec3_dot(obj->angle, ray.dir) > 0;
+	if (!is_top_first)
+		phony.pos = vec3_add(obj->pos, vec3_mult(obj->angle, obj->height));
+	out = cast_ray_plane(phony, ray);
+	relative = vec3_add(out.point, phony.pos);
+	if (out.obj
+		&& ft_abs(vec3_dot(relative, relative)) < pow(obj->diameter / 2, 2))
+	{
+		out.obj = obj;
+		return (out);
+	}
+	if (is_top_first)
+		phony.pos = obj->pos;
+	else
+		phony.pos = vec3_add(obj->pos, vec3_mult(obj->angle, obj->height));
+	out = cast_ray_plane(phony, ray);
+	relative = vec3_add(out.point, phony.pos);
+	if (out.obj
+		&& ft_abs(vec3_dot(relative, relative)) < pow(obj->diameter / 2, 2))
+	{
+		out.obj = obj;
+		return (out);
+	}
+	return ((t_intersect){.obj = NULL});
+}
+
+/*
 parameters
 t_obj	obj
 {
@@ -76,6 +114,7 @@ t_obj	obj
 	t_angle	angle;
 	double	diameter;
 	double	height;
+	...
 }
 t_ray	ray
 {
@@ -84,42 +123,57 @@ t_ray	ray
 	double	max_dist;
 }
 
+return
+t_intersect
+{
+	t_point	point;
+	t_obj	obj;
+	t_angle	normal;
+	double	cam_dist;
+}
 */
-t_intersect	cast_ray_cylinder(t_cylinder *obj,
-		t_pos start, t_angle dir, double max_dist)
+
+t_intersect	cast_ray_cylinder(t_cylinder *obj, t_ray ray)
 {
 	t_vec3		x_dir;
 	t_vec3		y_dir;
 	//t_vec3	z_dir; // = obj->angle
 	t_vec3		dists; // distances to go along with x_dir, y_dir and obj->angle
 
-	t_vec3		extra; // x = m, y = dot_x, z = len_x
+	t_vec3		extra;
 	// extra.x: the offset distance of the intersection
 	// extra.y: vec3_dot(x_dir, x_dir)
 	// extra.z: sqrt(extra.y);
 	t_intersect	out;
 
-	// the dir and dists will define an offset from c to find the intersect points
+	// the dir and dists will define an offset from c to find the intersect
+	// points
 	// note, dist.z will be + or - m, dist.y will be positive or negative
 
 	x_dir = vec3_cross(obj->angle, ray.dir);
 	extra.y = vec3_dot(x_dir, x_dir);
-	// first if; if 0 then parallel, check caps
+	if (extra.y == 0)
+		return (cast_ray_cylinder_caps(obj, ray));
 	extra.z = sqrt(extra.y);
-	dists.x = vec3_dot(vec3_mult(x_dir, 1 / extra.z), vec3_add(obj->pos, vec3_inverse(ray.start)));
-	// second if; if dists.x > radius, no intersection, return out.obj = NULL
+	dists.x = vec3_dot(vec3_mult(x_dir, 1 / extra.z),
+			vec3_add(obj->pos, vec3_inverse(ray.start)));
+	if (dists.x > pow(obj->diameter / 2, 2))
+		return ((t_intersect){.obj = NULL});
 	y_dir = vec3_cross(vec3_mult(x_dir, 1 / extra.z), obj->angle);
-	dists.y = sqrt(pow(obj->height / 2, 2), dists.x ^ 2);
-	dists.z = vec3_dot(vec3_cross(ray.dir, x_dir), vec3_add(ray.start, vec3_inverse(obj->pos))) / extra.y;
-	extra.x = sqrt(1 - extra.y) * y_dir / extra.z;
-	// third if; if ((dists.z - extra.x < 0 && dists.z + extra.x < 0)
-	//			|| (dists.z - extra.x > height && dists.z + extra.x > height))
-	// forth if; if dists.z - extra.x < 0 || dists.z + extra.x > height, no first intersection
+	dists.y = sqrt(pow(obj->height / 2, 2) - pow(dists.x, 2));
+	dists.z = vec3_dot(vec3_cross(ray.dir, x_dir),
+			vec3_add(ray.start, vec3_inverse(obj->pos))) / extra.y;
+	extra.x = sqrt(1 - extra.y) * dists.y / extra.z;
+	if ((dists.z - extra.x < 0 && dists.z + extra.x < 0)
+		&& (dists.z - extra.x > obj->height && dists.z + extra.x > obj->height))
+		return ((t_intersect){.obj = NULL});
+	if (dists.z - extra.x < 0 || dists.z - extra.x > obj->height)
+		return (cast_ray_cylinder_alt(obj, ray, /*???*/));
 	out.point = vec3_add(obj->pos, vec3_mult(x_dir, dists.x));
 	out.point = vec3_add(out.point, vec3_mult(y_dir, dists.y));
 	out.point = vec3_add(out.point, vec3_mult(obj->angle, dists.z - extra.x));
-	out.normal = vec3_add(out.point, vec3_inverse(vec3_add(obj->pos, vec3_mult(obj->angle, dists.z - extra.x))));
+	out.normal = vec3_add(out.point, vec3_inverse(vec3_add(obj->pos,
+					vec3_mult(obj->angle, dists.z - extra.x))));
 	out.obj = obj;
-
-	return (obj);
+	return (out);
 }
