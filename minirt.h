@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2024/12/18 13:22:04 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/08 17:01:18 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,13 @@ typedef struct s_intersect
 	t_angle	normal;
 	double	cam_dist;
 }	t_intersect;
+
+typedef struct s_ray
+{
+	t_pos	start;
+	t_angle	dir;
+	double	max_dist;
+}	t_ray;
 
 // camera functions
 void	init_camera(t_cam *cam);
