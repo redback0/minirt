@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:43:37 by nlehmeye          #+#    #+#             */
-/*   Updated: 2024/12/09 14:04:21 by njackson         ###   ########.fr       */
+/*   Updated: 2024/12/09 17:28:39 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 	{
 		printf("Error\nIncorrect Number of Arguments.\n");
-		return (1);
+		exit(1);
 	}
-	parse_input(argv[1], &dat.scene);
+	err = parse_input(argv[1], &dat.scene);
 	if (err != 0)
+	{
 		ft_lstclear(&(dat.scene.objs), free);
+		exit(1);
+	}
 	get_mlx_dat(&dat);
 	init_camera(&dat.scene.cam);
 	get_all_pixels(&dat, raytrace_pixel);
@@ -44,16 +47,3 @@ int	main(int argc, char **argv)
 	mlx_loop(dat.mlx.mlxptr);
 	return (0);
 }
-
-
-// int err;
-
-// err = 0;
-// err += firstfunction();
-// err += secondfunction();
-// err += thirdfunction();
-
-// return (err);
-
-// if (err != 0)
-// ft_free()

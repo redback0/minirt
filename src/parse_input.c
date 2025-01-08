@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:43:03 by nlehmeye          #+#    #+#             */
-/*   Updated: 2024/12/03 20:25:35 by njackson         ###   ########.fr       */
+/*   Updated: 2024/12/11 09:19:33 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@ int	parse_input(const char *file, t_scene *scene)
 {
 	int		fd;
 	char	*line;
+	int		gnl_err;
 
 	line = NULL;
+	gnl_err = 0;
 	fd = open(file, O_RDONLY, 0);
 	if (fd == -1)
 	{
@@ -29,16 +31,12 @@ int	parse_input(const char *file, t_scene *scene)
 	{
 		if (line[ft_strlen(line) - 1] == '\n')
 			line[ft_strlen(line) - 1] = '\0';
-		if (id_assign(line, scene) != 0)
-		{
-			free(line);
-			return (1);
-		}
+		gnl_err += id_assign(line, scene);
 		free(line);
 		line = get_next_line(fd);
 	}
 	close(fd);
-	return (0);
+	return (gnl_err);
 }
 
 int	id_assign(char *line, t_scene *scene)
@@ -55,7 +53,6 @@ int	id_assign(char *line, t_scene *scene)
 
 void	id_assign_assist(char **elements, t_scene *scene, int *err)
 {
-	printf("id_assign_assist\n\n\n");
 	if (!elements || !elements[0] || elements[0][0] == '\n')
 		;
 	else if (!ft_strncmp(elements[0], "A", 1))

@@ -38,7 +38,7 @@ int	check_colour_range(t_colour rgb)
 	if ((rgb.red < 0 || rgb.red > 255) || (rgb.green < 0
 			|| rgb.green > 255) || (rgb.blue < 0 || rgb.blue > 255))
 	{
-		ft_printf("Error\nRBG outside 0-255 range.\n");
+		ft_printf("Error\nRGB outside 0-255 range.\n");
 		return (1);
 	}
 	return (0);
