@@ -14,6 +14,7 @@ FILES :=	main \
 			vectors \
 			vectors_ext \
 			raytrace_pixel \
+			cast_ray \
 
 
 #mrt_mlx_test
