@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:02:13 by nlehmeye          #+#    #+#             */
-/*   Updated: 2025/01/08 16:02:14 by nlehmeye         ###   ########.fr       */
+/*   Updated: 2025/01/11 15:49:18 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,3 @@ t_intersect	cast_ray_plane(t_obj *obj, t_ray ray)
 // 	t_angle	normal;
 // 	double	cam_dist;
 // }	t_intersect;
-
-
-t_intersect	cast_ray_cylinder(t_obj *obj, t_ray ray)
-{
-	t_intersect	*intersection;
-	
-	
-
-	return (intersection);
-}

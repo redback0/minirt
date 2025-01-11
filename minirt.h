@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/08 17:01:18 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/11 15:49:46 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,8 +173,8 @@ void	init_camera(t_cam *cam);
 t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y);
 
 // vector math functions -- detailed in doc
-double	vec3_dot_product(t_vec3 vec1, t_vec3 vec2);
-t_vec3	vec3_cross_product(t_vec3 vec1, t_vec3 vec2);
+double	vec3_dot(t_vec3 vec1, t_vec3 vec2);
+t_vec3	vec3_cross(t_vec3 vec1, t_vec3 vec2);
 t_vec3	vec3_add(t_vec3 vec1, t_vec3 vec2);
 t_vec3	vec3_inverse(t_vec3 vec);
 t_vec3	vec3_reflect(t_vec3 vec, t_vec3 reflect);
@@ -191,6 +191,12 @@ int		key_hook(int key, t_mrt_dat *dat);
 //  ** main.c ** //
 int 	test_main(void);
 void	free_list_obj(t_list *objs);
+
+// ** cast_ray ** //
+t_intersect	cast_ray(t_list *objs, t_ray ray);
+t_intersect	cast_ray_sphere(t_obj *obj, t_ray ray);
+t_intersect	cast_ray_plane(t_obj *obj, t_ray ray);
+t_intersect	cast_ray_plane(t_obj *obj, t_ray ray);
 
 //  ** parse_input.c ** //
 int		parse_input(const char *file, t_scene *scene);
