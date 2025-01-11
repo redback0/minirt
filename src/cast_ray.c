@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:02:13 by nlehmeye          #+#    #+#             */
-/*   Updated: 2025/01/11 15:49:18 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:19:16 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ t_intersect	cast_ray(t_list *objs, t_ray ray)
 
 t_intersect	cast_ray_sphere(t_obj *obj, t_ray ray)
 {
-	t_intersect	*intersection;
-	
-	
+	//t_intersect	intersection;
+	(void)obj, (void)ray;
 
-	return (intersection);
+	return ((t_intersect){.obj = NULL});
 }
 // find closest point of object, not past [max distance]
 // params:
@@ -54,11 +53,10 @@ t_intersect	cast_ray_sphere(t_obj *obj, t_ray ray)
 //  -- CAST_RAY_PLANE() --
 t_intersect	cast_ray_plane(t_obj *obj, t_ray ray)
 {
-	t_intersect	*intersection;
-	
-	
+	//t_intersect	intersection;
+	(void)obj, (void)ray;
 
-	return (intersection);
+	return ((t_intersect){.obj = NULL});
 }
 // find closest point of object, not past [max distance]
 // params:

@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/11 16:06:46 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:22:04 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,7 @@ t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y);
 double	vec3_dot(t_vec3 vec1, t_vec3 vec2);
 t_vec3	vec3_cross(t_vec3 vec1, t_vec3 vec2);
 t_vec3	vec3_add(t_vec3 vec1, t_vec3 vec2);
+t_vec3	vec3_mult(t_vec3 vec, double n);
 t_vec3	vec3_inverse(t_vec3 vec);
 t_vec3	vec3_reflect(t_vec3 vec, t_vec3 reflect);
 t_vec3	vec3_normalise(t_vec3 vec);
