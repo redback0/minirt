@@ -18,7 +18,6 @@ int	assign_a(char **elements, t_scene *scene)
 	int			err;
 
 	err = 0;
-	alight = scene->alight;
 	if (count_array_rows((void **)elements) != 3)
 	{
 		printf("Error\nIncorrect number of element A info.\n");
@@ -29,6 +28,7 @@ int	assign_a(char **elements, t_scene *scene)
 		printf("Error\n atod Error in attempt to assign A.\n");
 	err += check_unit(alight.ratio);
 	err += assign_colour(elements[2], &alight.colour);
+	alight = scene->alight;
 	return (err);
 }
 
@@ -38,7 +38,6 @@ int	assign_c(char **elements, t_scene *scene)
 	int		err;
 
 	err = 0;
-	camera = scene->cam;
 	if (count_array_rows((void **)elements) != 4)
 	{
 		printf("Error\n Incorrect number of element C info.\n");
@@ -51,6 +50,7 @@ int	assign_c(char **elements, t_scene *scene)
 	if (err != 0)
 		printf("Error\n atod Error in attempt to assign C.\n");
 	err += check_fov(camera.fov);
+	camera = scene->cam;
 	return (err);
 }
 
@@ -60,7 +60,6 @@ int	assign_l(char **elements, t_scene *scene)
 	int		err;
 
 	err = 0;
-	light = scene->light;
 	if (count_array_rows((void **)elements) != 4)
 	{
 		printf("Error\n Incorrect number of element L info.\n");
@@ -72,6 +71,7 @@ int	assign_l(char **elements, t_scene *scene)
 		printf("Error\natod Error in attempt to assign L.\n");
 	err += check_unit(light.ratio);
 	err += assign_colour(elements[3], &light.colour);
+	scene->light = light;
 	return (err);
 }
 
