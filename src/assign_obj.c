@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/05 12:15:28 by nlehmeye          #+#    #+#             */
-/*   Updated: 2024/12/03 20:26:54 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:57:37 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	assign_pl(char **elements, t_scene *scene)
 	plane->id = PLANE;
 	err += assign_vector(elements[1], &plane->pos);
 	err += assign_vector(elements[2], &plane->angle);
+	err += check_angle(&plane->angle);
 	err += check_sym_unit(plane->angle);
 	err += assign_colour(elements[3], &plane->colour);
 	return (err);
@@ -102,6 +103,7 @@ void	assign_cy_assist(char **elements, t_obj *cylinder, int *err)
 {
 	*err += assign_vector(elements[1], &cylinder->pos);
 	*err += assign_vector(elements[2], &cylinder->angle);
+	*err += check_angle(&cylinder->angle);
 	*err += check_sym_unit(cylinder->angle);
 	*err += check_positive(cylinder->diameter);
 	*err += check_positive(cylinder->height);

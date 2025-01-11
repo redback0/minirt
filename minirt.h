@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/11 16:22:04 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:50:35 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,8 +209,6 @@ int		count_array_rows(void **arr);
 int		assign_a(char **elements, t_scene *scene);
 int		assign_c(char **elements, t_scene *scene);
 int		assign_l(char **elements, t_scene *scene);
-int		assign_vector(char *elementinfo, t_vec3 *vector);
-int		assign_colour(char *elementinfo, t_colour *rgb);
 
 // ** assign_obj.c ** //
 int		assign_pl(char **elements, t_scene *scene);
@@ -219,6 +217,10 @@ int		assign_cy(char **elements, t_scene *scene);
 void	assign_cy_assist(char **elements, t_obj *cylinder, int *err);
 double	assign_obj_assist(char *element, int *err);
 
+// ** assign_helpers.c ** //
+int		assign_vector(char *elementinfo, t_vec3 *vector);
+int		assign_colour(char *elementinfo, t_colour *rgb);
+int		check_angle(t_angle *angle);
 
 // ** check_elements.c ** //
 int		check_unit(double ratio);

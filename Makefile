@@ -10,6 +10,7 @@ FILES :=	main \
 			parse_input \
 			assign_ACL \
 			assign_obj \
+			assign_helpers \
 			check_elements \
 			vectors \
 			vectors_ext \

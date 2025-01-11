@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:43:37 by nlehmeye          #+#    #+#             */
-/*   Updated: 2024/12/09 17:28:39 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/11 16:26:49 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	main(int argc, char **argv)
 	get_mlx_dat(&dat);
 	init_camera(&dat.scene.cam);
 	get_all_pixels(&dat, raytrace_pixel);
+	printf("Render complete\n");
 	mlx_put_image_to_window(dat.mlx.mlxptr, dat.mlx.winptr, dat.mlx.img.img,
 		0, 0);
 	mlx_hook(dat.mlx.winptr, 17, 1L << 5, &window_closed, &dat);
