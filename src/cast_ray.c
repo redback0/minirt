@@ -21,9 +21,10 @@ t_intersect	cast_ray(t_list *objs, t_vec3 origin, t_vec3 dir, double max_dis, in
 	intersection = malloc(sizeof(*intersection));
 	if (!intersection)
 	{
-		*err 
+		printf("Error\ncast_ray Error.\n");
+		(*err)++;
 	}
-	while (objs)
+	while (objs != NULL)
 	{
 		if (objs->content.id == PLANE)
 			intersection = cast_ray_plane();
@@ -35,13 +36,7 @@ t_intersect	cast_ray(t_list *objs, t_vec3 origin, t_vec3 dir, double max_dis, in
 	}
 	return (intersection);
 }
-typedef struct s_intersect
-{
-	t_point	point;
-	t_obj	*obj;
-	t_angle	normal;
-	double	cam_dist;
-}	t_intersect;
+
 
 // find closest point that the ray defined by start
 //   and dir intersects with using the object type
@@ -73,3 +68,11 @@ typedef struct s_intersect
 //   angle direction of ray (normalised)
 //   max distance (double, infinity if no max dist)
 // returns: closest intersection point, as t_intersect datatype
+
+//typedef struct s_intersect
+// {
+// 	t_point	point;
+// 	t_obj	*obj;
+// 	t_angle	normal;
+// 	double	cam_dist;
+// }	t_intersect;

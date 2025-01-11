@@ -28,7 +28,7 @@ int	assign_a(char **elements, t_scene *scene)
 		printf("Error\n atod Error in attempt to assign A.\n");
 	err += check_unit(alight.ratio);
 	err += assign_colour(elements[2], &alight.colour);
-	alight = scene->alight;
+	scene->alight = alight;
 	return (err);
 }
 
@@ -50,7 +50,7 @@ int	assign_c(char **elements, t_scene *scene)
 	if (err != 0)
 		printf("Error\n atod Error in attempt to assign C.\n");
 	err += check_fov(camera.fov);
-	camera = scene->cam;
+	scene->cam = camera;
 	return (err);
 }
 
