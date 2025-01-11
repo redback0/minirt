@@ -6,42 +6,42 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:02:13 by nlehmeye          #+#    #+#             */
-/*   Updated: 2025/01/11 16:19:16 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/11 18:03:17 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
 //  -- CAST_RAY() --
-t_intersect	cast_ray(t_list *objs, t_ray ray)
+t_hit	cast_ray(t_list *objs, t_ray ray)
 {
-	t_intersect	intersection;
-	t_intersect	temp_intersect;
+	t_hit	hit;
+	t_hit	temp_hit;
 
-	ft_bzero(&intersection, sizeof(intersection));
+	ft_bzero(&hit, sizeof(hit));
 	while (objs != NULL)
 	{
 		if (((t_obj *)objs->content)->id == PLANE)
-			temp_intersect = cast_ray_plane(((t_obj *)objs->content), ray);
+			temp_hit = cast_ray_plane(((t_obj *)objs->content), ray);
 		else if (((t_obj *)objs->content)->id == SPHERE)
-			temp_intersect = cast_ray_sphere(((t_obj *)objs->content), ray);
+			temp_hit = cast_ray_sphere(((t_obj *)objs->content), ray);
 		else if (((t_obj *)objs->content)->id == CYLINDER)
-			temp_intersect = cast_ray_cylinder(((t_obj *)objs->content), ray);
-		if (temp_intersect.cam_dist < intersection.cam_dist)
-			intersection = temp_intersect;
+			temp_hit = cast_ray_cylinder(((t_obj *)objs->content), ray);
+		if (temp_hit.cam_dist < hit.cam_dist)
+			hit = temp_hit;
 		objs = objs->next;
 	}
-	return (intersection);
+	return (hit);
 }
 //  -- CAST_RAY_SPHERE() --
 
-t_intersect	cast_ray_sphere(t_obj *obj, t_ray ray)
+t_hit	cast_ray_sphere(t_obj *obj, t_ray ray)
 {
-	t_intersect	intersection;
+	t_hit	hit;
 
 	double	t;
 
-	return ((t_intersect){.obj = NULL});
+	return ((t_hit){.obj = NULL});
 }
 t_point	find_intersect_point(double t, t_ray ray)
 {
@@ -51,7 +51,7 @@ t_point	find_intersect_point(double t, t_ray ray)
 	return (point);
 }
 
-t_intersect	solve_quadratic(t_obj *obj, t_ray ray)
+t_hit	solve_quadratic(t_obj *obj, t_ray ray)
 {
 	double	a;
 	double	b;
@@ -69,23 +69,23 @@ t_intersect	solve_quadratic(t_obj *obj, t_ray ray)
 //   t obj object (the type of obj) to check intersects
 //   angle direction of ray (normalised)
 //   max distance (double, infinity if no max dist)
-// returns: closest intersection point, as t_intersect datatype
+// returns: closest hit point, as t_hit datatype
 
 
 //  -- CAST_RAY_PLANE() --
-t_intersect	cast_ray_plane(t_obj *obj, t_ray ray)
+t_hit	cast_ray_plane(t_obj *obj, t_ray ray)
 {
-	//t_intersect	intersection;
+	//t_hit	hit;
 	(void)obj, (void)ray;
 
-	return ((t_intersect){.obj = NULL});
+	return ((t_hit){.obj = NULL});
 }
 // find closest point of object, not past [max distance]
 // params:
 //   t obj object (the type of obj) to check intersects
 //   angle direction of ray (normalised)
 //   max distance (double, infinity if no max dist)
-// returns: closest intersection point, as t_intersect datatype
+// returns: closest hit point, as t_hit datatype
 
 //typedef struct s_intersect
 // {
@@ -93,4 +93,4 @@ t_intersect	cast_ray_plane(t_obj *obj, t_ray ray)
 // 	t_obj	*obj;
 // 	t_angle	normal;
 // 	double	cam_dist;
-// }	t_intersect;
+// }	t_hit;

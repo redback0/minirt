@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/11 16:50:35 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/11 18:04:26 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,13 +153,13 @@ typedef struct s_mrt_dat
 	t_mlx	mlx;
 }	t_mrt_dat;
 
-typedef struct s_intersect
+typedef struct s_hit
 {
 	t_point	point;
 	t_obj	*obj;
 	t_angle	normal;
 	double	cam_dist;
-}	t_intersect;
+}	t_hit;
 
 typedef struct s_ray
 {
@@ -194,10 +194,10 @@ int 	test_main(void);
 void	free_list_obj(t_list *objs);
 
 // ** cast_ray ** //
-t_intersect	cast_ray(t_list *objs, t_ray ray);
-t_intersect	cast_ray_plane(t_obj *obj, t_ray ray);
-t_intersect	cast_ray_sphere(t_obj *obj, t_ray ray);
-t_intersect	cast_ray_cylinder(t_obj *obj, t_ray ray);
+t_hit	cast_ray(t_list *objs, t_ray ray);
+t_hit	cast_ray_plane(t_obj *obj, t_ray ray);
+t_hit	cast_ray_sphere(t_obj *obj, t_ray ray);
+t_hit	cast_ray_cylinder(t_obj *obj, t_ray ray);
 
 //  ** parse_input.c ** //
 int		parse_input(const char *file, t_scene *scene);
