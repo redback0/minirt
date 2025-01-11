@@ -13,34 +13,26 @@
 #include "minirt.h"
 
 //  -- CAST_RAY() --
-
 t_intersect	cast_ray(t_list *objs, t_ray ray)
 {
 	t_intersect	intersection;
-	
-	intersection.obj = NULL;
+	t_intersect	temp_intersect;
+
+	ft_bzero(&intersection, sizeof(intersection));
 	while (objs != NULL)
 	{
 		if (((t_obj *)objs->content)->id == PLANE)
-		{
-			if (!((intersection.obj != NULL) && ((cast_ray_plane(((t_obj *)objs->content), ray)).cam_dist > intersection.cam_dist)))
-				intersection = cast_ray_plane(((t_obj *)objs->content), ray);
-		}
+			temp_intersect = cast_ray_plane(((t_obj *)objs->content), ray);
 		else if (((t_obj *)objs->content)->id == SPHERE)
-		{
-			if (!((intersection.obj != NULL) && (cast_ray_sphere(((t_obj *)objs->content), ray).cam_dist > intersection.cam_dist)))
-				intersection = cast_ray_sphere(((t_obj *)objs->content), ray);
-		}
+			temp_intersect = cast_ray_sphere(((t_obj *)objs->content), ray);
 		else if (((t_obj *)objs->content)->id == CYLINDER)
-		{
-			if (!((intersection.obj != NULL) && (cast_ray_cylinder(((t_obj *)objs->content), ray).cam_dist > intersection.cam_dist)))
-				intersection = cast_ray_cylinder(((t_obj *)objs->content), ray);
-		}
+			temp_intersect = cast_ray_cylinder(((t_obj *)objs->content), ray);
+		if (temp_intersect.cam_dist < intersection.cam_dist)
+			intersection = temp_intersect;
 		objs = objs->next;
 	}
 	return (intersection);
 }
-
 //  -- CAST_RAY_SPHERE() --
 
 t_intersect	cast_ray_sphere(t_obj *obj, t_ray ray)
