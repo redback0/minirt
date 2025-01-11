@@ -105,7 +105,7 @@ typedef struct s_obj
 	t_pos		pos;
 	t_colour	colour;
 	t_angle		angle;
-	double		diameter;
+	double		radius;
 	double		height;
 }	t_obj;
 
@@ -168,6 +168,18 @@ typedef struct s_ray
 	double	max_dist;
 }	t_ray;
 
+typedef struct s_quad
+{
+	double	a;
+	double	b;
+	double	c;
+	double	t1;
+	double	t2;
+	double	discrim;
+	double	num_sol;
+}	t_quad;
+
+
 // camera functions
 void	init_camera(t_cam *cam);
 t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y);
@@ -180,6 +192,7 @@ t_vec3	vec3_mult(t_vec3 vec, double n);
 t_vec3	vec3_inverse(t_vec3 vec);
 t_vec3	vec3_reflect(t_vec3 vec, t_vec3 reflect);
 t_vec3	vec3_normalise(t_vec3 vec);
+double	vec3_dist_betw(t_vec3 pos1, t_vec3 pos2);
 
 // mlx management functions
 int		get_mlx_dat(t_mrt_dat *dat);
@@ -197,6 +210,7 @@ void	free_list_obj(t_list *objs);
 t_hit	cast_ray(t_list *objs, t_ray ray);
 t_hit	cast_ray_plane(t_obj *obj, t_ray ray);
 t_hit	cast_ray_sphere(t_obj *obj, t_ray ray);
+double	solve_quadratic(t_obj *obj, t_ray ray);
 t_hit	cast_ray_cylinder(t_obj *obj, t_ray ray);
 
 //  ** parse_input.c ** //

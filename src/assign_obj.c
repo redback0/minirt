@@ -65,8 +65,8 @@ int	assign_sp(char **elements, t_scene *scene)
 	}
 	sphere->id = SPHERE;
 	err += assign_vector(elements[1], &sphere->pos);
-	sphere->diameter = assign_obj_assist(elements[2], &err);
-	err += check_positive(sphere->diameter);
+	sphere->radius = assign_obj_assist(elements[2], &err) / 2;
+	err += check_positive(sphere->radius);
 	err += assign_colour(elements[3], &sphere->colour);
 	return (err);
 }
@@ -93,7 +93,7 @@ int	assign_cy(char **elements, t_scene *scene)
 		return (1);
 	}
 	cylinder->id = CYLINDER;
-	cylinder->diameter = assign_obj_assist(elements[3], &err);
+	cylinder->radius = assign_obj_assist(elements[3], &err) / 2;
 	cylinder->height = assign_obj_assist(elements[4], &err);
 	assign_cy_assist(elements, cylinder, &err);
 	return (err);
@@ -105,7 +105,7 @@ void	assign_cy_assist(char **elements, t_obj *cylinder, int *err)
 	*err += assign_vector(elements[2], &cylinder->angle);
 	*err += check_angle(&cylinder->angle);
 	*err += check_sym_unit(cylinder->angle);
-	*err += check_positive(cylinder->diameter);
+	*err += check_positive(cylinder->radius);
 	*err += check_positive(cylinder->height);
 	*err += assign_colour(elements[5], &cylinder->colour);
 }

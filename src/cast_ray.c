@@ -27,7 +27,7 @@ t_hit	cast_ray(t_list *objs, t_ray ray)
 			temp_hit = cast_ray_sphere(((t_obj *)objs->content), ray);
 		else if (((t_obj *)objs->content)->id == CYLINDER)
 			temp_hit = cast_ray_cylinder(((t_obj *)objs->content), ray);
-		if (temp_hit.cam_dist < hit.cam_dist)
+		if (hit.obj != NULL && temp_hit.cam_dist < hit.cam_dist)
 			hit = temp_hit;
 		objs = objs->next;
 	}
@@ -39,31 +39,37 @@ t_hit	cast_ray_sphere(t_obj *obj, t_ray ray)
 {
 	t_hit	hit;
 
-	double	t;
-
+	hit.point = vec3_add(ray.start, (vec3_mult(ray.dir, solve_quadratic(obj, ray))));
+	hit.obj = obj;
+	hit.normal = ;
+	hit.cam_dist = solve_quadratic(obj, ray);
 	return ((t_hit){.obj = NULL});
 }
-t_point	find_intersect_point(double t, t_ray ray)
+
+double	solve_quadratic(t_obj *obj, t_ray ray)
 {
-	t_point	point;
-
-
-	return (point);
-}
-
-t_hit	solve_quadratic(t_obj *obj, t_ray ray)
-{
-	double	a;
-	double	b;
-	double	c;
+	t_quad	quad;
 	double	t;
 
-	a = vec3_dot(ray.dir, ray.dir);
-	b = 2 * vec3_dot(something, ray.dir);
-	c = ;
-	t = 
-	return (t);
+	quad.a = vec3_dot(ray.dir, ray.dir);
+	quad.b = 2 * vec3_dot(vec3_add(ray.start, vec3_inverse(obj->pos)), ray.dir);
+	quad.c = vec3_dot(vec3_add(ray.start, vec3_inverse(obj->pos)),
+			vec3_add(ray.start, vec3_inverse(obj->pos))) - pow(obj->radius, 2);
+	quad.discrim = pow(quad.b, 2) - (4 * quad.a * quad.c);
+	if (quad.discrim > 0)
+	{
+		quad.t1 = (-quad.b + sqrt(quad.discrim)) / (2 * quad.a);
+		quad.t2 = (-quad.b - sqrt(quad.discrim)) / (2 * quad.a);
+	}
+	else if (quad.discrim == 0);
+		quad.t1 = -quad.b / (2 * quad.a);
+	if (quad.t2 > 0 && quad.t2 < quad.t1)
+		quad.t1 = quad.t2;
+	if (quad.t1 < 0)
+		quad.t1 = 0;
+	return (quad.t1);
 }
+// MAX DISTANCE HANDLING
 // find closest point of object, not past [max distance]
 // params:
 //   t obj object (the type of obj) to check intersects

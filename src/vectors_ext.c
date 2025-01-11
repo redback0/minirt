@@ -30,3 +30,11 @@ t_vec3	vec3_mult(t_vec3 a, double m)
 	a.z *= m;
 	return (a);
 }
+double	vec3_dist_betw(t_vec3 pos1, t_vec3 pos2);
+{
+	double	length;
+	double	temp;
+	temp = (vec3_add(pos1, vec3_inverse(pos2)))
+	length = sqrt(vec3_dot(temp, temp));
+	return (length);
+}
