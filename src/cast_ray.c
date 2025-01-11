@@ -37,10 +37,32 @@ t_intersect	cast_ray(t_list *objs, t_ray ray)
 
 t_intersect	cast_ray_sphere(t_obj *obj, t_ray ray)
 {
-	//t_intersect	intersection;
-	(void)obj, (void)ray;
+	t_intersect	intersection;
+
+	double	t;
 
 	return ((t_intersect){.obj = NULL});
+}
+t_point	find_intersect_point(double t, t_ray ray)
+{
+	t_point	point;
+
+
+	return (point);
+}
+
+t_intersect	solve_quadratic(t_obj *obj, t_ray ray)
+{
+	double	a;
+	double	b;
+	double	c;
+	double	t;
+
+	a = vec3_dot(ray.dir, ray.dir);
+	b = 2 * vec3_dot(something, ray.dir);
+	c = ;
+	t = 
+	return (t);
 }
 // find closest point of object, not past [max distance]
 // params:
