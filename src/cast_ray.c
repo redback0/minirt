@@ -14,44 +14,43 @@
 
 //  -- CAST_RAY() --
 
-t_intersect	cast_ray(t_list *objs, t_vec3 origin, t_vec3 dir, double max_dis, int *err)
+t_intersect	cast_ray(t_list *objs, t_ray ray)
 {
-	t_intersect	*intersection;
+	t_intersect	intersection;
 	
-	intersection = malloc(sizeof(*intersection));
-	if (!intersection)
-	{
-		printf("Error\ncast_ray Error.\n");
-		(*err)++;
-	}
+	intersection.obj = NULL;
 	while (objs != NULL)
 	{
-		if (objs->content.id == PLANE)
-			intersection = cast_ray_plane();
-		else if (objs->content->id == SPHERE)
-			intersection = cast_ray_sphere();
-		else if (objs->content->id == CYLINDER)
-			intersection = cast_ray_cylinder();
+		if (((t_obj *)objs->content)->id == PLANE)
+		{
+			if (!((intersection.obj != NULL) && ((cast_ray_plane(((t_obj *)objs->content), ray)).cam_dist > intersection.cam_dist)))
+				intersection = cast_ray_plane(((t_obj *)objs->content), ray);
+		}
+		else if (((t_obj *)objs->content)->id == SPHERE)
+		{
+			if (!((intersection.obj != NULL) && (cast_ray_sphere(((t_obj *)objs->content), ray).cam_dist > intersection.cam_dist)))
+				intersection = cast_ray_sphere(((t_obj *)objs->content), ray);
+		}
+		else if (((t_obj *)objs->content)->id == CYLINDER)
+		{
+			if (!((intersection.obj != NULL) && (cast_ray_cylinder(((t_obj *)objs->content), ray).cam_dist > intersection.cam_dist)))
+				intersection = cast_ray_cylinder(((t_obj *)objs->content), ray);
+		}
 		objs = objs->next;
 	}
 	return (intersection);
 }
 
-
-// find closest point that the ray defined by start
-//   and dir intersects with using the object type
-//   specific functions, returning it along with the object
-// params:
-//   list of t_objs
-//   position of start of ray
-//   angle direction of ray (normalised)
-//   max distance (double, infinity if no max distance)
-// call: cast_ray cylinder/sphere/plane, as we go down the list of t objs
-// returns: closest intersection point, as t_intersect datatype
-
-
 //  -- CAST_RAY_SPHERE() --
 
+t_intersect	cast_ray_sphere(t_obj *obj, t_ray ray)
+{
+	t_intersect	*intersection;
+	
+	
+
+	return (intersection);
+}
 // find closest point of object, not past [max distance]
 // params:
 //   t obj object (the type of obj) to check intersects
@@ -61,7 +60,14 @@ t_intersect	cast_ray(t_list *objs, t_vec3 origin, t_vec3 dir, double max_dis, in
 
 
 //  -- CAST_RAY_PLANE() --
+t_intersect	cast_ray_plane(t_obj *obj, t_ray ray)
+{
+	t_intersect	*intersection;
+	
+	
 
+	return (intersection);
+}
 // find closest point of object, not past [max distance]
 // params:
 //   t obj object (the type of obj) to check intersects
@@ -76,3 +82,13 @@ t_intersect	cast_ray(t_list *objs, t_vec3 origin, t_vec3 dir, double max_dis, in
 // 	t_angle	normal;
 // 	double	cam_dist;
 // }	t_intersect;
+
+
+t_intersect	cast_ray_cylinder(t_obj *obj, t_ray ray)
+{
+	t_intersect	*intersection;
+	
+	
+
+	return (intersection);
+}
