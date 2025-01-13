@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:28:29 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/11 16:17:23 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:18:26 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ static t_vec3	camera_rotation(t_vec3 v, t_cam cam)
 
 t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y)
 {
-	t_ray		ray;
-	t_intersect	hit;
+	t_ray	ray;
+	t_hit	hit;
 
 	ray.dir.x = 2 * (x - (dat->mlx.img.width / 2)) / dat->mlx.img.width;
 	ray.dir.y = 2 * (y - (dat->mlx.img.height / 2)) / dat->mlx.img.width;

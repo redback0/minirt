@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:02:13 by nlehmeye          #+#    #+#             */
-/*   Updated: 2025/01/11 18:03:17 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/13 14:20:29 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,20 @@ t_hit	cast_ray(t_list *objs, t_ray ray)
 
 t_hit	cast_ray_sphere(t_obj *obj, t_ray ray)
 {
-	t_hit	hit;
+	(void)obj, (void)ray;
+	//t_hit	hit;
 
-	hit.point = vec3_add(ray.start, (vec3_mult(ray.dir, solve_quadratic(obj, ray))));
-	hit.obj = obj;
-	hit.normal = ;
-	hit.cam_dist = solve_quadratic(obj, ray);
+	//hit.point = vec3_add(ray.start, (vec3_mult(ray.dir, solve_quadratic(obj, ray))));
+	//hit.obj = obj;
+	//hit.normal = ;
+	//hit.cam_dist = solve_quadratic(obj, ray);
 	return ((t_hit){.obj = NULL});
 }
 
 double	solve_quadratic(t_obj *obj, t_ray ray)
 {
 	t_quad	quad;
-	double	t;
+//	double	t;
 
 	quad.a = vec3_dot(ray.dir, ray.dir);
 	quad.b = 2 * vec3_dot(vec3_add(ray.start, vec3_inverse(obj->pos)), ray.dir);
@@ -61,7 +62,7 @@ double	solve_quadratic(t_obj *obj, t_ray ray)
 		quad.t1 = (-quad.b + sqrt(quad.discrim)) / (2 * quad.a);
 		quad.t2 = (-quad.b - sqrt(quad.discrim)) / (2 * quad.a);
 	}
-	else if (quad.discrim == 0);
+	else if (quad.discrim == 0)
 		quad.t1 = -quad.b / (2 * quad.a);
 	if (quad.t2 > 0 && quad.t2 < quad.t1)
 		quad.t1 = quad.t2;
