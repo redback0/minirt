@@ -32,6 +32,20 @@ t_hit	cast_ray(t_list *objs, t_ray ray)
 	}
 	return (hit);
 }
+//COMMENT
+// t_hit	cast_ray_sphere(t_obj *obj, t_ray ray)
+// {
+// 	t_hit	hit;
+
+// 	hit.cam_dist = solve_quadratic(obj, ray);
+// 	if (hit.cam_dist == 0 || hit.cam_dist > ray.max_dist)
+// 		return ((t_hit){.obj = NULL});
+// 	hit.obj = obj;
+// 	hit.normal = vec3_normalise(vec3_add(hit.point, vec3_inverse(obj->pos)));
+// 	hit.point = vec3_add(ray.start, (vec3_mult(ray.dir, hit.cam_dist)));
+// 	return (hit);
+// }
+//COMMENT
 
 t_hit	cast_ray_sphere(t_obj *obj, t_ray ray)
 {
@@ -41,33 +55,73 @@ t_hit	cast_ray_sphere(t_obj *obj, t_ray ray)
 	if (hit.cam_dist == 0 || hit.cam_dist > ray.max_dist)
 		return ((t_hit){.obj = NULL});
 	hit.obj = obj;
-	hit.normal = vec3_mult((vec3_add(hit.point, vec3_inverse(obj->pos))), (1 / obj->radius));
+	hit.normal = vec3_normalise(vec3_mult((vec3_add(hit.point, vec3_inverse(obj->pos))), (1 / obj->radius)));
 	hit.point = vec3_add(ray.start, (vec3_mult(ray.dir, hit.cam_dist)));
 	return (hit);
 }
-
 double	solve_quadratic(t_obj *obj, t_ray ray)
 {
 	t_quad	quad;
+	double	q;
 
+	q = 0.0;
 	quad.a = vec3_dot(ray.dir, ray.dir);
 	quad.b = 2 * vec3_dot(vec3_add(ray.start, vec3_inverse(obj->pos)), ray.dir);
 	quad.c = vec3_dot(vec3_add(ray.start, vec3_inverse(obj->pos)),
 			vec3_add(ray.start, vec3_inverse(obj->pos))) - pow(obj->radius, 2);
-	quad.discrim = pow(quad.b, 2) - (4 * quad.a * quad.c);
-	if (quad.discrim > 0)
-	{
-		quad.t1 = (-quad.b + sqrt(quad.discrim)) / (2 * quad.a);
-		quad.t2 = (-quad.b - sqrt(quad.discrim)) / (2 * quad.a);
-	}
+	
+	quad.discrim = quad.b * quad.b - 4 * quad.a * quad.c;
+	if (quad.discrim < 0)
+		return (0);
 	else if (quad.discrim == 0)
-		quad.t1 = -quad.b / (2 * quad.a);
+	{
+		quad.t1 = -0.5 * quad.b / quad.a;
+		quad.t2 = -0.5 * quad.b / quad.a;
+	}
+	else
+	{
+		if (quad.b > 0)
+			q = -0.5 * (quad.b + sqrt(quad.discrim));
+		else
+			q = -0.5 * (quad.b - sqrt(quad.discrim));
+	}
+	quad.t1 = q / quad.a;
+	quad.t2 = quad.c / q;
 	if (quad.t2 > 0 && quad.t2 < quad.t1)
 		quad.t1 = quad.t2;
 	if (quad.t1 < 0)
 		quad.t1 = 0;
 	return (quad.t1);
 }
+
+// if t1 > t2
+// {
+// 	temp = t1
+// 	t1 = t2
+// 	t2 = temp;
+// }
+// double	solve_quadratic(t_obj *obj, t_ray ray)
+// {
+// 	t_quad	quad;
+
+// 	quad.a = vec3_dot(ray.dir, ray.dir);
+// 	quad.b = 2 * vec3_dot(vec3_add(ray.start, vec3_inverse(obj->pos)), ray.dir);
+// 	quad.c = vec3_dot(vec3_add(ray.start, vec3_inverse(obj->pos)),
+// 			vec3_add(ray.start, vec3_inverse(obj->pos))) - pow(obj->radius, 2);
+// 	quad.discrim = pow(quad.b, 2) - (4 * quad.a * quad.c);
+// 	if (quad.discrim > 0)
+// 	{
+// 		quad.t1 = (-quad.b + sqrt(quad.discrim)) / (2 * quad.a);
+// 		quad.t2 = (-quad.b - sqrt(quad.discrim)) / (2 * quad.a);
+// 	}
+// 	else if (quad.discrim == 0)
+// 		quad.t1 = -quad.b / (2 * quad.a);
+// 	if (quad.t2 > 0 && quad.t2 < quad.t1)
+// 		quad.t1 = quad.t2;
+// 	if (quad.t1 < 0)
+// 		quad.t1 = 0;
+// 	return (quad.t1);
+// }
 
 t_hit	cast_ray_plane(t_obj *obj, t_ray ray)
 {
@@ -80,9 +134,9 @@ t_hit	cast_ray_plane(t_obj *obj, t_ray ray)
 		return ((t_hit){.obj = NULL});
 	hit.obj = obj;
 	if (vec3_dot(obj->angle, ray.dir) > 0)
-		hit.normal = vec3_inverse(obj->angle);
+		hit.normal = vec3_normalise(vec3_inverse(obj->angle));
 	else
-		hit.normal = obj->angle;
+		hit.normal = vec3_normalise(obj->angle);
 	hit.point = vec3_add(ray.start, (vec3_mult(ray.dir, hit.cam_dist)));
 	return (hit);
 }
