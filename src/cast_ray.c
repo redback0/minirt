@@ -37,20 +37,20 @@ t_hit	cast_ray(t_list *objs, t_ray ray)
 
 t_hit	cast_ray_sphere(t_obj *obj, t_ray ray)
 {
-	(void)obj, (void)ray;
-	//t_hit	hit;
+	t_hit	hit;
 
-	//hit.point = vec3_add(ray.start, (vec3_mult(ray.dir, solve_quadratic(obj, ray))));
-	//hit.obj = obj;
-	//hit.normal = ;
-	//hit.cam_dist = solve_quadratic(obj, ray);
+	hit.cam_dist = solve_quadratic(obj, ray);
+	if (hit.cam_dist == 0)
+		return ((t_hit){.obj = NULL});
+	hit.obj = obj;
+	hit.normal = vec3_mult((vec3_add(hit.point, vec3_inverse(obj->pos))), (1 / obj->radius));
+	hit.point = vec3_add(ray.start, (vec3_mult(ray.dir, hit.cam_dist)));
 	return ((t_hit){.obj = NULL});
 }
 
 double	solve_quadratic(t_obj *obj, t_ray ray)
 {
 	t_quad	quad;
-//	double	t;
 
 	quad.a = vec3_dot(ray.dir, ray.dir);
 	quad.b = 2 * vec3_dot(vec3_add(ray.start, vec3_inverse(obj->pos)), ray.dir);
@@ -82,9 +82,19 @@ double	solve_quadratic(t_obj *obj, t_ray ray)
 //  -- CAST_RAY_PLANE() --
 t_hit	cast_ray_plane(t_obj *obj, t_ray ray)
 {
-	//t_hit	hit;
-	(void)obj, (void)ray;
-
+	t_hit	hit;
+	
+	if (vec3_dot(ray.dir, obj->angle) == 0)
+		return ((t_hit){.obj = NULL});
+	hit.cam_dist = -(vec3_dot(vec3_add(ray.start, vec3_inverse(obj->pos)), obj->angle) / vec3_dot(ray.dir, obj->angle));
+	if (hit.cam_dist == 0)
+		return ((t_hit){.obj = NULL});
+	hit.obj = obj;
+	if (vec3_dot(obj->angle, ray.dir) > 0)
+		hit.normal = vec3_inverse(obj->angle);
+	else
+		hit.normal = obj->angle;
+	hit.point = vec3_add(ray.start, (vec3_mult(ray.dir, hit.cam_dist)));
 	return ((t_hit){.obj = NULL});
 }
 // find closest point of object, not past [max distance]
@@ -93,11 +103,3 @@ t_hit	cast_ray_plane(t_obj *obj, t_ray ray)
 //   angle direction of ray (normalised)
 //   max distance (double, infinity if no max dist)
 // returns: closest hit point, as t_hit datatype
-
-//typedef struct s_intersect
-// {
-// 	t_point	point;
-// 	t_obj	*obj;
-// 	t_angle	normal;
-// 	double	cam_dist;
-// }	t_hit;

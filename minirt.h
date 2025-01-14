@@ -176,7 +176,6 @@ typedef struct s_quad
 	double	t1;
 	double	t2;
 	double	discrim;
-	double	num_sol;
 }	t_quad;
 
 
