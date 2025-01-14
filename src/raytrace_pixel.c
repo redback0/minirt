@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:28:29 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/14 15:51:36 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:38:18 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,18 @@ static t_vec3	camera_rotation(t_vec3 v, t_cam cam)
 	return (out);
 }
 
-static t_colour	get_colour_from_hit(t_scene *scene, t_hit hit)
+static t_colour	get_colour_from_hit(t_scene *scene, t_hit hit, t_ray ray)
 {
 	t_colour	out;
+	double		dot;
 
 	(void)scene;
-	out.red = hit.normal.x * 255;
-	out.blue = hit.normal.y * 255;
-	out.green = hit.normal.z * 255;
+	dot = fabs(vec3_dot(vec3_normalise(hit.normal), ray.dir));
+	if (dot > 1)
+		printf("ERROR: hit vs ray dot to large\n");
+	out.red = dot * 255;
+	out.blue = 255 - out.red;
+	out.green = 0;
 	return (out);
 }
 
@@ -89,7 +93,7 @@ t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y)
 	if (hit.obj)
 	{
 		// PHONG STUFF
-		return (get_colour_from_hit(&dat->scene, hit));
+		return (get_colour_from_hit(&dat->scene, hit, ray));
 	}
 	return ((t_colour){0, 0, 0});
 }

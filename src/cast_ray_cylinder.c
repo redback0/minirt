@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:23:38 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/14 15:44:39 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:35:31 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static t_hit	cast_ray_cylinder_caps(t_cylinder *obj, t_ray ray)
 	out = cast_ray_plane(&phony, ray);
 	relative = vec3_add(out.point, phony.pos);
 	if (out.obj
-		&& ft_abs(vec3_dot(relative, relative)) < pow(obj->radius, 2))
+		&& fabs(vec3_dot(relative, relative)) < pow(obj->radius, 2))
 	{
 		out.obj = obj;
 		return (out);
@@ -90,7 +90,7 @@ static t_hit	cast_ray_cylinder_caps(t_cylinder *obj, t_ray ray)
 	out = cast_ray_plane(&phony, ray);
 	relative = vec3_add(out.point, phony.pos);
 	if (out.obj
-		&& ft_abs(vec3_dot(relative, relative)) < pow(obj->radius, 2))
+		&& fabs(vec3_dot(relative, relative)) < pow(obj->radius, 2))
 	{
 		out.obj = obj;
 		return (out);
@@ -193,9 +193,9 @@ t_hit	cast_ray_cylinder(t_cylinder *obj, t_ray ray)
 	hit.point = vec3_add(ray.start, vec3_mult(ray.dir, hit.cam_dist));
 	hit.obj = obj;
 	cdist = vec3_dot(vec3_cross(ray.dir, adir), vec3_add(ray.start,
-				vec3_inverse(ray.start))) / dot_adir;
-	hit.normal = vec3_normalise(vec3_add(hit.point, vec3_add(obj->pos,
-					vec3_mult(obj->angle, cdist))));
+				vec3_inverse(obj->pos))) / dot_adir;
+	hit.normal = vec3_normalise(vec3_add(hit.point,
+				vec3_inverse(vec3_add(obj->pos, vec3_mult(obj->angle, cdist)))));
 	return (hit);
 }
 

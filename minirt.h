@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/11 18:04:26 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/14 17:21:41 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ void	mlx_destroy_display(void *mlx);
 typedef struct s_colour
 {
 	int	red;
-	int	blue;
 	int	green;
+	int	blue;
 }	t_colour;
 
 // a basic vector type
