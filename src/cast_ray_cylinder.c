@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:23:38 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/13 14:21:56 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:44:39 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ t_hit	cast_ray_cylinder(t_cylinder *obj,
 static t_hit	cast_ray_cylinder_caps(t_cylinder *obj, t_ray ray)
 {
 	t_hit	out;
-	t_obj		phony;
-	t_vec3		relative;
-	int			is_top_first;
+	t_obj	phony;
+	t_vec3	relative;
+	int		is_top_first;
 
 	phony = *obj;
 	is_top_first = vec3_dot(obj->angle, ray.dir) > 0;
@@ -98,12 +98,14 @@ static t_hit	cast_ray_cylinder_caps(t_cylinder *obj, t_ray ray)
 	return ((t_hit){.obj = NULL});
 }
 
+/*
 static t_hit	cast_ray_cylinder_alt(t_cylinder *obj, t_ray ray)
 {
 	(void)obj, (void)ray;
 
 	return ((t_hit){.obj = NULL});
 }
+*/
 
 /*
 parameters
@@ -115,11 +117,28 @@ t_obj	obj
 	double	height;
 	...
 }
+
 t_ray	ray
 {
 	t_pos	start;
 	t_angle	dir;
 	double	max_dist;
+}
+
+variables
+t_cyl_offset	offset
+{
+	t_vec3	xdir;
+	t_vec3	ydir;
+	t_vec3	zdir;
+	double	xdist;
+	double	ydist;
+	double	zdist;
+}
+OR
+{
+	double	cdist;
+	double	offset;
 }
 
 return
@@ -132,6 +151,55 @@ t_hit
 }
 */
 
+/*
+cylinder hit
+adir   -> perpendicular to obj->angle and ray.dir
+a      -> minimum distance between obj axis and ray axis
+b      -> other part of a triangle to the outside of the circle
+cosphi -> sin of the angle between obj->angle and ray.dir, and the cosine of
+              the angle between bdir(undefined here) and obj->angle
+offset -> distance back (or forward) along obj->angle to get to the hit.point
+cdist  -> distance from ray.start along ray.dir to get to the midpoint of 2
+              possible hit.points. reused later for obj->pos and obj->angle
+hit    -> information about the intersection -- point, obj, normal, cam_dist
+*/
+t_hit	cast_ray_cylinder(t_cylinder *obj, t_ray ray)
+{
+	t_vec3	adir;
+	double	a;
+	double	b;
+	double	dot_adir;
+	double	offset;
+	double	cdist;
+	t_hit	hit;
+
+	adir = vec3_cross(obj->angle, ray.dir);
+	dot_adir = vec3_dot(adir, adir);
+	if (dot_adir < 0)
+		return (cast_ray_cylinder_caps(obj, ray));
+	a = vec3_dot(vec3_normalise(adir), vec3_add(ray.start, vec3_inverse(obj->pos)));
+	if (a > obj->radius)
+		return ((t_hit){.obj = NULL});
+	b = sqrt(pow(obj->radius, 2) - pow(a, 2));
+	offset = b / sqrt(dot_adir);
+	cdist = -vec3_dot(vec3_cross(obj->angle, adir), vec3_add(obj->pos,
+				vec3_inverse(ray.start))) / dot_adir;
+	if (offset < cdist && cdist - offset < ray.max_dist)
+		hit.cam_dist = cdist - offset;
+	else if (cdist + offset < ray.max_dist && cdist + offset > 0) // before the line below, check caps
+		hit.cam_dist = cdist + offset;
+	else
+		return ((t_hit){.obj = NULL});
+	hit.point = vec3_add(ray.start, vec3_mult(ray.dir, hit.cam_dist));
+	hit.obj = obj;
+	cdist = vec3_dot(vec3_cross(ray.dir, adir), vec3_add(ray.start,
+				vec3_inverse(ray.start))) / dot_adir;
+	hit.normal = vec3_normalise(vec3_add(hit.point, vec3_add(obj->pos,
+					vec3_mult(obj->angle, cdist))));
+	return (hit);
+}
+
+/*
 t_hit	cast_ray_cylinder(t_cylinder *obj, t_ray ray)
 {
 	t_vec3		x_dir;
@@ -167,7 +235,7 @@ t_hit	cast_ray_cylinder(t_cylinder *obj, t_ray ray)
 		&& (dists.z - extra.x > obj->height && dists.z + extra.x > obj->height))
 		return ((t_hit){.obj = NULL});
 	if (dists.z - extra.x < 0 || dists.z - extra.x > obj->height)
-		return (cast_ray_cylinder_alt(obj, ray/*, ???*/));
+		return (cast_ray_cylinder_alt(obj, ray, ???));
 	out.point = vec3_add(obj->pos, vec3_mult(x_dir, dists.x));
 	out.point = vec3_add(out.point, vec3_mult(y_dir, dists.y));
 	out.point = vec3_add(out.point, vec3_mult(obj->angle, dists.z - extra.x));
@@ -176,3 +244,4 @@ t_hit	cast_ray_cylinder(t_cylinder *obj, t_ray ray)
 	out.obj = obj;
 	return (out);
 }
+*/

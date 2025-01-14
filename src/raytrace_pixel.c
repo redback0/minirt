@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:28:29 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/13 14:18:26 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:51:36 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,21 +58,38 @@ static t_vec3	camera_rotation(t_vec3 v, t_cam cam)
 	return (out);
 }
 
+static t_colour	get_colour_from_hit(t_scene *scene, t_hit hit)
+{
+	t_colour	out;
+
+	(void)scene;
+	out.red = hit.normal.x * 255;
+	out.blue = hit.normal.y * 255;
+	out.green = hit.normal.z * 255;
+	return (out);
+}
+
 t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y)
 {
+	t_image	*img;
+	t_cam	*cam;
 	t_ray	ray;
 	t_hit	hit;
 
-	ray.dir.x = 2 * (x - (dat->mlx.img.width / 2)) / dat->mlx.img.width;
-	ray.dir.y = 2 * (y - (dat->mlx.img.height / 2)) / dat->mlx.img.width;
-	ray.dir.z = dat->scene.cam.rect_dist;
+	img = &dat->mlx.img;
+	cam = &dat->scene.cam;
+	ray.dir.x = 2 * (x - ((double)img->width / 2)) / img->width;
+	ray.dir.y = -2 * (y - ((double)img->height / 2)) / img->width;
+	ray.dir.z = cam->rect_dist;
 	ray.dir = camera_rotation(ray.dir, dat->scene.cam);
 	ray.dir = vec3_normalise(ray.dir);
+	ray.start = cam->pos;
+	ray.max_dist = INFINITY;
 	hit = cast_ray(dat->scene.objs, ray);
 	if (hit.obj)
 	{
 		// PHONG STUFF
-		return (hit.obj->colour);
+		return (get_colour_from_hit(&dat->scene, hit));
 	}
 	return ((t_colour){0, 0, 0});
 }

@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:02:13 by nlehmeye          #+#    #+#             */
-/*   Updated: 2025/01/13 14:20:29 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/14 15:01:43 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_hit	cast_ray(t_list *objs, t_ray ray)
 			temp_hit = cast_ray_sphere(((t_obj *)objs->content), ray);
 		else if (((t_obj *)objs->content)->id == CYLINDER)
 			temp_hit = cast_ray_cylinder(((t_obj *)objs->content), ray);
-		if (hit.obj != NULL && temp_hit.cam_dist < hit.cam_dist)
+		if (hit.obj == NULL || (temp_hit.obj != NULL && temp_hit.cam_dist < hit.cam_dist))
 			hit = temp_hit;
 		objs = objs->next;
 	}
