@@ -206,11 +206,14 @@ int		key_hook(int key, t_mrt_dat *dat);
 int 	test_main(void);
 void	free_list_obj(t_list *objs);
 
-// ** cast_ray ** //
+// ** cast_ray.c ** //
 t_hit	cast_ray(t_list *objs, t_ray ray);
 t_hit	cast_ray_plane(t_obj *obj, t_ray ray);
 t_hit	cast_ray_sphere(t_obj *obj, t_ray ray);
 double	solve_quadratic(t_obj *obj, t_ray ray);
+void	t1_assign(t_quad *quad);
+
+// ** cast_ray_cylinder ** //
 t_hit	cast_ray_cylinder(t_obj *obj, t_ray ray);
 
 //  ** parse_input.c ** //
