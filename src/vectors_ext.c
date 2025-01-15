@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 15:16:52 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/13 14:17:36 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:10:49 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,12 @@ double	vec3_dist_betw(t_vec3 pos1, t_vec3 pos2)
 	temp = vec3_add(pos1, vec3_inverse(pos2));
 	length = sqrt(vec3_dot(temp, temp));
 	return (length);
+}
+
+t_vec3	vec3_sub(t_vec3 a, t_vec3 b)
+{
+	a.x -= b.x;
+	a.y -= b.y;
+	a.z -= b.z;
+	return (a);
 }

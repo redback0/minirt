@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:23:38 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/14 17:35:31 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/14 21:05:56 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ static t_hit	cast_ray_cylinder_caps(t_cylinder *obj, t_ray ray)
 		phony.pos = vec3_add(obj->pos, vec3_mult(obj->angle, obj->height));
 	out = cast_ray_plane(&phony, ray);
 	relative = vec3_add(out.point, phony.pos);
-	if (out.obj
-		&& fabs(vec3_dot(relative, relative)) < pow(obj->radius, 2))
+	if (out.obj && fabs(vec3_dot(relative, relative)) < pow(obj->radius, 2))
 	{
 		out.obj = obj;
 		return (out);
@@ -89,8 +88,7 @@ static t_hit	cast_ray_cylinder_caps(t_cylinder *obj, t_ray ray)
 		phony.pos = vec3_add(obj->pos, vec3_mult(obj->angle, obj->height));
 	out = cast_ray_plane(&phony, ray);
 	relative = vec3_add(out.point, phony.pos);
-	if (out.obj
-		&& fabs(vec3_dot(relative, relative)) < pow(obj->radius, 2))
+	if (out.obj && fabs(vec3_dot(relative, relative)) < pow(obj->radius, 2))
 	{
 		out.obj = obj;
 		return (out);
@@ -98,14 +96,12 @@ static t_hit	cast_ray_cylinder_caps(t_cylinder *obj, t_ray ray)
 	return ((t_hit){.obj = NULL});
 }
 
-/*
 static t_hit	cast_ray_cylinder_alt(t_cylinder *obj, t_ray ray)
 {
 	(void)obj, (void)ray;
 
 	return ((t_hit){.obj = NULL});
 }
-*/
 
 /*
 parameters
@@ -171,31 +167,33 @@ t_hit	cast_ray_cylinder(t_cylinder *obj, t_ray ray)
 	double	dot_adir;
 	double	offset;
 	double	cdist;
+	double	odist;
+	double	ooffset;
 	t_hit	hit;
 
 	adir = vec3_cross(obj->angle, ray.dir);
 	dot_adir = vec3_dot(adir, adir);
 	if (dot_adir < 0)
 		return (cast_ray_cylinder_caps(obj, ray));
-	a = vec3_dot(vec3_normalise(adir), vec3_add(ray.start, vec3_inverse(obj->pos)));
-	if (a > obj->radius)
+	a = vec3_dot(vec3_normalise(adir), vec3_sub(ray.start, obj->pos));
+	if (fabs(a) > obj->radius)
 		return ((t_hit){.obj = NULL});
 	b = sqrt(pow(obj->radius, 2) - pow(a, 2));
 	offset = b / sqrt(dot_adir);
-	cdist = -vec3_dot(vec3_cross(obj->angle, adir), vec3_add(obj->pos,
-				vec3_inverse(ray.start))) / dot_adir;
-	if (offset < cdist && cdist - offset < ray.max_dist)
-		hit.cam_dist = cdist - offset;
-	else if (cdist + offset < ray.max_dist && cdist + offset > 0) // before the line below, check caps
-		hit.cam_dist = cdist + offset;
-	else
-		return ((t_hit){.obj = NULL});
+	cdist = -vec3_dot(vec3_cross(obj->angle, adir), vec3_sub(obj->pos,
+				ray.start)) / dot_adir;
+	odist = vec3_dot(vec3_cross(ray.dir, adir), vec3_sub(ray.start,
+				obj->pos)) / dot_adir;
+	ooffset = vec3_dot(obj->angle, vec3_mult(ray.dir, offset));
+	//ooffset = sqrt(pow(offset, 2) - (b * b));
+	if (cdist - offset <= 0 || cdist - offset >= ray.max_dist
+		|| odist - ooffset < -obj->height / 2 || odist - ooffset > obj->height / 2) // more not first hit cases
+		return (cast_ray_cylinder_alt(obj, ray/*, ???*/));
+	hit.cam_dist = cdist - offset;
 	hit.point = vec3_add(ray.start, vec3_mult(ray.dir, hit.cam_dist));
 	hit.obj = obj;
-	cdist = vec3_dot(vec3_cross(ray.dir, adir), vec3_add(ray.start,
-				vec3_inverse(obj->pos))) / dot_adir;
-	hit.normal = vec3_normalise(vec3_add(hit.point,
-				vec3_inverse(vec3_add(obj->pos, vec3_mult(obj->angle, cdist)))));
+	hit.normal = vec3_normalise(vec3_sub(hit.point,
+				vec3_add(obj->pos, vec3_mult(obj->angle, odist))));
 	return (hit);
 }
 

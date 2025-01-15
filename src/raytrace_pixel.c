@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:28:29 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/14 17:38:18 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/14 20:54:43 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,17 @@ static t_colour	get_colour_from_hit(t_scene *scene, t_hit hit, t_ray ray)
 	double		dot;
 
 	(void)scene;
-	dot = fabs(vec3_dot(vec3_normalise(hit.normal), ray.dir));
-	if (dot > 1)
+	dot = vec3_dot(vec3_normalise(hit.normal), ray.dir);
+	if (fabs(dot) > 1)
 		printf("ERROR: hit vs ray dot to large\n");
-	out.red = dot * 255;
+	//if (hit.obj->id == SPHERE)
+	//	printf("%f, %f, %f\n", hit.normal.x, hit.normal.y, hit.normal.z);
+	out.red = fabs(dot) * 255;
 	out.blue = 255 - out.red;
-	out.green = 0;
+	if (dot > 0)
+		out.green = 255;
+	else
+		out.green = 0;
 	return (out);
 }
 
