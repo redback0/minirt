@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:38:19 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/15 19:01:38 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/15 22:58:48 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,5 @@ t_colour	get_hit_colour(t_scene *scene, t_hit hit, t_ray ray)
 		colour.blue += temp.blue;
 		colour.green += temp.green;
 	}
-	else if (hit.obj->id == PLANE && hit.obj == check_obstr.obj)
-		printf("DIFFUSE SKIPPED: %d\n", hit.obj == check_obstr.obj);
 	return (colour);
 }

@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/08 16:02:13 by nlehmeye          #+#    #+#             */
-/*   Updated: 2025/01/14 15:01:43 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/15 22:58:25 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_hit	cast_ray_plane(t_obj *obj, t_ray ray)
 		return ((t_hit){.obj = NULL});
 	hit.cam_dist = -(vec3_dot(vec3_add(ray.start, vec3_inverse(obj->pos)),
 				obj->angle) / cos_angle);
-	if (hit.cam_dist <= 0 || hit.cam_dist > ray.max_dist)
+	if (hit.cam_dist <= 0.00001 || hit.cam_dist > ray.max_dist)
 		return ((t_hit){.obj = NULL});
 	hit.obj = obj;
 	if (cos_angle > 0)

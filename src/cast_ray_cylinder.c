@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:23:38 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/15 17:02:04 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/15 22:57:42 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static t_hit	cast_ray_cylinder_hit(t_cylinder *obj, t_ray ray, t_cy_hit_info cy)
 {
 	t_hit	hit;
 
-	if (cy.r_dist + cy.r_offset <= 0 || cy.r_dist - cy.r_offset >= ray.max_dist
+	if (cy.r_dist + cy.r_offset <= 0.00001 || cy.r_dist - cy.r_offset >= ray.max_dist
 		|| cy.o_dist + fabs(cy.o_offset) < -obj->height / 2
 		|| cy.o_dist - fabs(cy.o_offset) > obj->height / 2)
 		return ((t_hit){.obj = NULL});
