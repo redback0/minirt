@@ -1,6 +1,6 @@
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-DEBUG_FLAGS := -g -DDEBUG=1
+DEBUG_FLAGS := -g -DDEBUG=1 -DREASIGN_ANGLES=1
 
 NAME := miniRT
 

@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/15 18:55:39 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/15 23:14:42 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@
 void	mlx_destroy_display(void *mlx);
 #  define DESTROY_DISPLAY 0
 #  define RESIZABLE 0
+# endif
+
+// a define so we don't have to worry about maps having normalised angles
+# ifndef REASIGN_ANGLES
+#  define REASIGN_ANGLES 0
 # endif
 
 // colour, stored as 3 values from 0-255

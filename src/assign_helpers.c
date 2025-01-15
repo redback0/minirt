@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:40:46 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/14 17:01:00 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/15 23:13:21 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	check_angle(t_angle *angle)
 		*angle = vec3_mult(*angle, 1 / sqrt(self_dot));
 		printf("Should be:\n");
 		printf("(%.17f\n %.17f\n %.17f)\n", angle->x, angle->y, angle->z);
-		// return (1); // uncomment for final version
+		return (!REASIGN_ANGLES);
 	}
 	return (0);
 }
