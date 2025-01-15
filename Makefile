@@ -17,9 +17,8 @@ FILES :=	main \
 			raytrace_pixel \
 			cast_ray \
 			cast_ray_cylinder \
+			get_hit_colour \
 
-
-#mrt_mlx_test
 
 # OS SPECIFICS
 UNAME := $(shell uname -s)

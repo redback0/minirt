@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:01:41 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/14 17:23:43 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:55:59 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,16 @@ void	get_all_pixels(t_mrt_dat *dat,
 		x = 0;
 		while (x < dat->mlx.img.width)
 		{
-			color = pixel_func(dat, x, y);
-			pixel = color.red << 16;
-			pixel += color.green << 8;
-			pixel += color.blue;
+			color = pixel_func(dat, x, y); // make sure colours are in range 0-255
+			if (color.red > 255)
+				color.red = 255;
+			if (color.blue > 255)
+				color.blue = 255;
+			if (color.green > 255)
+				color.green = 255;
+			pixel = (int)color.red << 16;
+			pixel += (int)color.green << 8;
+			pixel += (int)color.blue;
 			dat->mlx.img.imgdat[y * dat->mlx.img.width + x] = pixel;
 			++x;
 		}

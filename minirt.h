@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/14 18:11:07 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:55:39 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	mlx_destroy_display(void *mlx);
 // it may be useful in future to have a vector type colour struct as well
 typedef struct s_colour
 {
-	int	red;
-	int	green;
-	int	blue;
+	double	red;
+	double	green;
+	double	blue;
 }	t_colour;
 
 // a basic vector type
@@ -118,8 +118,8 @@ typedef t_obj	t_cylinder;
 typedef struct s_scene
 {
 	t_alight	alight;
-	// below may change later to a linked list
 	t_cam		cam;
+	// below may change later to a linked list
 	t_light		light;
 	t_list		*objs;
 }	t_scene;
@@ -179,10 +179,6 @@ typedef struct s_quad
 }	t_quad;
 
 
-// camera functions
-void	init_camera(t_cam *cam);
-t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y);
-
 // vector math functions -- detailed in doc
 double	vec3_dot(t_vec3 vec1, t_vec3 vec2);
 t_vec3	vec3_cross(t_vec3 vec1, t_vec3 vec2);
@@ -205,6 +201,14 @@ int		key_hook(int key, t_mrt_dat *dat);
 //  ** main.c ** //
 int 	test_main(void);
 void	free_list_obj(t_list *objs);
+
+// camera functions
+void		init_camera(t_cam *cam);
+t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y);
+
+// get_hit_colour.c
+t_colour	get_hit_normal_visual(t_scene *scene, t_hit hit, t_ray ray);
+t_colour	get_hit_colour(t_scene *scene, t_hit hit, t_ray ray);
 
 // ** cast_ray.c ** //
 t_hit	cast_ray(t_list *objs, t_ray ray);

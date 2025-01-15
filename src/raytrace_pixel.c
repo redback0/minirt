@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:28:29 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/15 14:18:57 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/15 18:34:34 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,14 @@ static t_vec3	camera_rotation(t_vec3 v, t_cam cam)
 {
 	t_vec3	out;
 
-	out.x = v.x * cam.ycos + v.y * cam.ysin * cam.psin
+	out.x = v.x * cam.ycos
+		+ v.y * cam.ysin * cam.psin
 		+ v.z * cam.ysin * cam.pcos;
-	out.y = v.y * cam.pcos - v.z * cam.psin;
-	out.z = -v.x * cam.ysin + v.y * cam.ycos * cam.psin
+	out.y = v.y * cam.pcos
+		- v.z * cam.psin;
+	out.z = -v.x * cam.ysin
+		+ v.y * cam.ycos * cam.psin
 		+ v.z * cam.ycos * cam.pcos;
-	return (out);
-}
-
-static t_colour	get_colour_from_hit(t_scene *scene, t_hit hit, t_ray ray)
-{
-	t_colour	out;
-
-	(void)scene, (void)ray;
-	out.red = pow(hit.normal.x, 2) * 255;
-	out.blue = pow(hit.normal.y, 2) * 255;
-	out.green = pow(hit.normal.z, 2) * 255;
 	return (out);
 }
 
@@ -89,7 +81,7 @@ t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y)
 	if (hit.obj)
 	{
 		// PHONG STUFF
-		return (get_colour_from_hit(&dat->scene, hit, ray));
+		return (get_hit_colour(&dat->scene, hit, ray));
 	}
 	return ((t_colour){0, 0, 0});
 }
