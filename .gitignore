@@ -1,5 +1,5 @@
 miniRT
 miniRT_debug
-obj/
-debug_obj/
+obj/*
+debug_obj/*
 *.a
