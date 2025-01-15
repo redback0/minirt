@@ -3,3 +3,5 @@ miniRT_debug
 obj/*
 debug_obj/*
 *.a
+*.o
+*.d
