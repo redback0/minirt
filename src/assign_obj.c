@@ -36,8 +36,7 @@ int	assign_pl(char **elements, t_scene *scene)
 	plane->id = PLANE;
 	err += assign_vector(elements[1], &plane->pos);
 	err += assign_vector(elements[2], &plane->angle);
-	err += check_angle(&plane->angle);
-	err += check_sym_unit(plane->angle);
+	err += check_angle(&plane->angle) + check_sym_unit(plane->angle);
 	err += assign_colour(elements[3], &plane->colour);
 	return (err);
 }
