@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:23:38 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/15 22:57:42 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/20 11:52:56 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ static t_hit	cast_ray_cylinder_alt(t_cylinder *obj, t_ray ray, t_cy_hit_info cy)
 	hit = cast_ray_cylinder_caps(obj, ray);
 	if (hit.obj)
 		return (hit);
+	if (cy.r_dist + cy.r_offset >= ray.max_dist
+		|| cy.o_dist + cy.o_offset < -obj->height / 2
+		|| cy.o_dist + cy.o_offset > obj->height / 2)
+		return ((t_hit){.obj = NULL});
 	hit.cam_dist = cy.r_dist + cy.r_offset;
 	hit.point = vec3_add(ray.start, vec3_mult(ray.dir, hit.cam_dist));
 	hit.obj = obj;

@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 17:38:19 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/20 11:11:36 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/20 11:45:18 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static t_colour	get_diffuse_light(t_light light, t_hit hit,
 
 	(void)ray;
 	intensity = vec3_dot(hit.normal, to_light) * light.ratio;
+	if (intensity < 0)
+		return ((t_colour){.red = 0, .blue = 0, .green = 0});
 	out.red = hit.obj->colour.red * intensity;
 	out.blue = hit.obj->colour.blue * intensity;
 	out.green = hit.obj->colour.green * intensity;
