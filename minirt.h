@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/15 23:14:42 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/20 11:10:49 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,8 +212,9 @@ void		init_camera(t_cam *cam);
 t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y);
 
 // get_hit_colour.c
-t_colour	get_hit_normal_visual(t_scene *scene, t_hit hit, t_ray ray);
 t_colour	get_hit_colour(t_scene *scene, t_hit hit, t_ray ray);
+t_colour	get_hit_normal_visual(t_scene *scene, t_hit hit, t_ray ray);
+t_colour	get_second_hit_colour(t_scene *scene, t_hit hit, t_ray ray);
 
 // ** cast_ray.c ** //
 t_hit	cast_ray(t_list *objs, t_ray ray);

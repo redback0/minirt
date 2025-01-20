@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:28:29 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/15 18:34:34 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/20 11:10:22 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,7 @@
 # define M_PI           3.14159265358979323846  /* pi */
 #endif
 
-// *** t_cam REDEFINITION REQUIRED ***
-// +double psin
-// +double pcos
-// +double ysin
-// +double ycos
-// +double rect_dist
-
-// *** REQUIRES NEW FUNCTION init_camera TO BE RUN BEFORE raytrace_pixel ***
+// *** REQUIRES FUNCTION init_camera TO BE RUN BEFORE raytrace_pixel ***
 
 void	init_camera(t_cam *cam)
 {
@@ -81,7 +74,9 @@ t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y)
 	if (hit.obj)
 	{
 		// PHONG STUFF
-		return (get_hit_colour(&dat->scene, hit, ray));
+		//return (get_hit_colour(&dat->scene, hit, ray));
+		//return (get_hit_normal_visual(&dat->scene, hit, ray));
+		return (get_second_hit_colour(&dat->scene, hit, ray));
 	}
 	return ((t_colour){0, 0, 0});
 }
