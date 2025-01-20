@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/20 11:10:49 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:44:13 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,18 @@
 # else
 #  define K_ESCAPE 0x35
 
-void	mlx_destroy_display(void *mlx);
+void		mlx_destroy_display(void *mlx);
 #  define DESTROY_DISPLAY 0
 #  define RESIZABLE 0
+# endif
+
+// define window size if not defined
+# ifndef WIN_HEIGHT
+#  define WIN_HEIGHT 600
+# endif
+
+# ifndef WIN_WIDTH
+#  define WIN_WIDTH 800
 # endif
 
 // a define so we don't have to worry about maps having normalised angles
@@ -64,15 +73,15 @@ typedef t_vec3	t_point;
 // the ambient light of a scene
 typedef struct s_alight
 {
-	double	ratio;
+	double		ratio;
 	t_colour	colour;
 }	t_alight;
 
 // a spot light, or just a light
 typedef struct s_light
 {
-	t_pos	pos;
-	double	ratio;
+	t_pos		pos;
+	double		ratio;
 	t_colour	colour;
 }	t_light;
 
@@ -183,29 +192,37 @@ typedef struct s_quad
 	double	discrim;
 }	t_quad;
 
+// info to make finding the second intersection on a cylinder more efficient
+typedef struct s_cy_hit_info
+{
+	double	r_offset;
+	double	r_dist;
+	double	o_offset;
+	double	o_dist;
+}	t_cy_hit_info;
 
 // vector math functions -- detailed in doc
-double	vec3_dot(t_vec3 vec1, t_vec3 vec2);
-t_vec3	vec3_cross(t_vec3 vec1, t_vec3 vec2);
-t_vec3	vec3_add(t_vec3 vec1, t_vec3 vec2);
-t_vec3	vec3_sub(t_vec3 a, t_vec3 b);
-t_vec3	vec3_mult(t_vec3 vec, double n);
-t_vec3	vec3_inverse(t_vec3 vec);
-t_vec3	vec3_reflect(t_vec3 vec, t_vec3 reflect);
-t_vec3	vec3_normalise(t_vec3 vec);
-double	vec3_dist_betw(t_vec3 pos1, t_vec3 pos2);
+double		vec3_dot(t_vec3 vec1, t_vec3 vec2);
+t_vec3		vec3_cross(t_vec3 vec1, t_vec3 vec2);
+t_vec3		vec3_add(t_vec3 vec1, t_vec3 vec2);
+t_vec3		vec3_sub(t_vec3 a, t_vec3 b);
+t_vec3		vec3_mult(t_vec3 vec, double n);
+t_vec3		vec3_inverse(t_vec3 vec);
+t_vec3		vec3_reflect(t_vec3 vec, t_vec3 reflect);
+t_vec3		vec3_normalise(t_vec3 vec);
+double		vec3_dist_betw(t_vec3 pos1, t_vec3 pos2);
 
 // mlx management functions
-int		get_mlx_dat(t_mrt_dat *dat);
-int		cleanup_mlx(t_mlx *mlx);
-int		new_image(void *mlxptr, t_image *image, int width, int height);
-void	get_all_pixels(t_mrt_dat *dat,
-			t_colour (*pixel_func)(t_mrt_dat *, int, int));
-int		key_hook(int key, t_mrt_dat *dat);
+int			get_mlx_dat(t_mrt_dat *dat);
+int			cleanup_mlx(t_mlx *mlx);
+int			new_image(void *mlxptr, t_image *image, int width, int height);
+void		get_all_pixels(t_mrt_dat *dat,
+				t_colour (*pixel_func)(t_mrt_dat *, int, int));
+int			key_hook(int key, t_mrt_dat *dat);
 
 //  ** main.c ** //
-int 	test_main(void);
-void	free_list_obj(t_list *objs);
+int			window_closed(t_mrt_dat *dat);
+void		free_list_obj(t_list *objs);
 
 // camera functions
 void		init_camera(t_cam *cam);
@@ -217,43 +234,43 @@ t_colour	get_hit_normal_visual(t_scene *scene, t_hit hit, t_ray ray);
 t_colour	get_second_hit_colour(t_scene *scene, t_hit hit, t_ray ray);
 
 // ** cast_ray.c ** //
-t_hit	cast_ray(t_list *objs, t_ray ray);
-t_hit	cast_ray_plane(t_obj *obj, t_ray ray);
-t_hit	cast_ray_sphere(t_obj *obj, t_ray ray);
-double	solve_quadratic(t_obj *obj, t_ray ray);
-void	t1_assign(t_quad *quad);
+t_hit		cast_ray(t_list *objs, t_ray ray);
+t_hit		cast_ray_plane(t_obj *obj, t_ray ray);
+t_hit		cast_ray_sphere(t_obj *obj, t_ray ray);
+double		solve_quadratic(t_obj *obj, t_ray ray);
+void		t1_assign(t_quad *quad);
 
 // ** cast_ray_cylinder ** //
-t_hit	cast_ray_cylinder(t_obj *obj, t_ray ray);
+t_hit		cast_ray_cylinder(t_obj *obj, t_ray ray);
 
 //  ** parse_input.c ** //
-int		parse_input(const char *file, t_scene *scene);
-int		id_assign(char *line, t_scene *scene);
-void	id_assign_assist(char **elements, t_scene *scene, int *err);
-int		count_array_rows(void **arr);
+int			parse_input(const char *file, t_scene *scene);
+int			id_assign(char *line, t_scene *scene);
+void		id_assign_assist(char **elements, t_scene *scene, int *err);
+int			count_array_rows(void **arr);
 
 // ** assign_ACL.c ** //
-int		assign_a(char **elements, t_scene *scene);
-int		assign_c(char **elements, t_scene *scene);
-int		assign_l(char **elements, t_scene *scene);
+int			assign_a(char **elements, t_scene *scene);
+int			assign_c(char **elements, t_scene *scene);
+int			assign_l(char **elements, t_scene *scene);
 
 // ** assign_obj.c ** //
-int		assign_pl(char **elements, t_scene *scene);
-int		assign_sp(char **elements, t_scene *scene);
-int		assign_cy(char **elements, t_scene *scene);
-void	assign_cy_assist(char **elements, t_obj *cylinder, int *err);
-double	assign_obj_assist(char *element, int *err);
+int			assign_pl(char **elements, t_scene *scene);
+int			assign_sp(char **elements, t_scene *scene);
+int			assign_cy(char **elements, t_scene *scene);
+void		assign_cy_assist(char **elements, t_obj *cylinder, int *err);
+double		assign_obj_assist(char *element, int *err);
 
 // ** assign_helpers.c ** //
-int		assign_vector(char *elementinfo, t_vec3 *vector);
-int		assign_colour(char *elementinfo, t_colour *rgb);
-int		check_angle(t_angle *angle);
+int			assign_vector(char *elementinfo, t_vec3 *vector);
+int			assign_colour(char *elementinfo, t_colour *rgb);
+int			check_angle(t_angle *angle);
 
 // ** check_elements.c ** //
-int		check_unit(double ratio);
-int		check_colour_range(t_colour rgb);
-int		check_positive(double obj_dimensions);
-int		check_fov(int fov);
-int		check_sym_unit(t_vec3 angle);
+int			check_unit(double ratio);
+int			check_colour_range(t_colour rgb);
+int			check_positive(double obj_dimensions);
+int			check_fov(int fov);
+int			check_sym_unit(t_vec3 angle);
 
 #endif //MINIRT_H

@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/05 18:28:29 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/20 11:10:22 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:41:36 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,11 @@ t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y)
 	hit = cast_ray(dat->scene.objs, ray);
 	if (hit.obj)
 	{
-		// PHONG STUFF
 		return (get_hit_colour(&dat->scene, hit, ray));
-		//return (get_hit_normal_visual(&dat->scene, hit, ray));
-		// return (get_second_hit_colour(&dat->scene, hit, ray));
 	}
 	return ((t_colour){0, 0, 0});
 }
+
+// debug colour functions
+// return (get_hit_normal_visual(&dat->scene, hit, ray));
+// return (get_second_hit_colour(&dat->scene, hit, ray));

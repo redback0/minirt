@@ -6,19 +6,11 @@
 /*   By: njackson <njackson@student.42adel.org.au>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/18 13:23:38 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/20 11:52:56 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:40:57 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-
-typedef struct s_cy_hit_info
-{
-	double	r_offset;
-	double	r_dist;
-	double	o_offset;
-	double	o_dist;
-}	t_cy_hit_info;
 
 // top is the cap on the positon, bottom is the cap at pos + (angle * height)
 static t_hit	cast_ray_cylinder_caps(t_cylinder *obj, t_ray ray)
@@ -49,7 +41,8 @@ static t_hit	cast_ray_cylinder_caps(t_cylinder *obj, t_ray ray)
 	return ((t_hit){.obj = NULL});
 }
 
-static t_hit	cast_ray_cylinder_alt(t_cylinder *obj, t_ray ray, t_cy_hit_info cy)
+static t_hit	cast_ray_cylinder_alt(t_cylinder *obj,
+	t_ray ray, t_cy_hit_info cy)
 {
 	t_hit	hit;
 
@@ -64,7 +57,8 @@ static t_hit	cast_ray_cylinder_alt(t_cylinder *obj, t_ray ray, t_cy_hit_info cy)
 	hit.point = vec3_add(ray.start, vec3_mult(ray.dir, hit.cam_dist));
 	hit.obj = obj;
 	hit.normal = vec3_normalise(vec3_sub(vec3_add(obj->pos,
-					vec3_mult(obj->angle, cy.o_dist + cy.o_offset)), hit.point));
+					vec3_mult(obj->angle, cy.o_dist + cy.o_offset)),
+				hit.point));
 	return (hit);
 }
 
@@ -83,34 +77,35 @@ o_dist   -> distance from obj->pos to the point inbetween the 2 possible hit
              points along obj->angle
 hit      -> information about the intersection -- point, obj, normal, cam_dist
 */
-static t_hit	cast_ray_cylinder_hit(t_cylinder *obj, t_ray ray, t_cy_hit_info cy)
+static t_hit	cast_ray_cylinder_hit(t_cylinder *obj, t_ray ray,
+	t_cy_hit_info cy)
 {
 	t_hit	hit;
 
-	if (cy.r_dist + cy.r_offset <= 0.00001 || cy.r_dist - cy.r_offset >= ray.max_dist
+	if (cy.r_dist + cy.r_offset <= 0.00001
+		|| cy.r_dist - cy.r_offset >= ray.max_dist
 		|| cy.o_dist + fabs(cy.o_offset) < -obj->height / 2
 		|| cy.o_dist - fabs(cy.o_offset) > obj->height / 2)
 		return ((t_hit){.obj = NULL});
-
 	if (cy.r_dist - cy.r_offset <= 0
 		|| cy.o_dist - cy.o_offset < -obj->height / 2
 		|| cy.o_dist - cy.o_offset > obj->height / 2)
 		return (cast_ray_cylinder_alt(obj, ray, cy));
-
 	hit.cam_dist = cy.r_dist - cy.r_offset;
 	hit.point = vec3_add(ray.start, vec3_mult(ray.dir, hit.cam_dist));
 	hit.obj = obj;
 	hit.normal = vec3_normalise(vec3_sub(hit.point,
-				vec3_add(obj->pos, vec3_mult(obj->angle, cy.o_dist - cy.o_offset))));
+				vec3_add(obj->pos, vec3_mult(obj->angle,
+						cy.o_dist - cy.o_offset))));
 	return (hit);
 }
 
 t_hit	cast_ray_cylinder(t_cylinder *obj, t_ray ray)
 {
-	t_vec3		adir;
-	double		a;
-	double		b;
-	double		dot_adir;
+	t_vec3			adir;
+	double			a;
+	double			b;
+	double			dot_adir;
 	t_cy_hit_info	cy;
 
 	adir = vec3_cross(obj->angle, ray.dir);
