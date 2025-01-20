@@ -68,7 +68,7 @@ int	check_angle(t_angle *angle)
 	double	self_dot;
 
 	self_dot = vec3_dot(*angle, *angle);
-	if (self_dot != 1)
+	if (self_dot < 0.99999999 || self_dot > 1.00000001)
 	{
 		printf("Error\nNone normalised angle:\n");
 		printf("Off by: %.17f\n", 1 - sqrt(self_dot));

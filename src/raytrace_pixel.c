@@ -74,9 +74,9 @@ t_colour	raytrace_pixel(t_mrt_dat *dat, int x, int y)
 	if (hit.obj)
 	{
 		// PHONG STUFF
-		//return (get_hit_colour(&dat->scene, hit, ray));
+		return (get_hit_colour(&dat->scene, hit, ray));
 		//return (get_hit_normal_visual(&dat->scene, hit, ray));
-		return (get_second_hit_colour(&dat->scene, hit, ray));
+		// return (get_second_hit_colour(&dat->scene, hit, ray));
 	}
 	return ((t_colour){0, 0, 0});
 }

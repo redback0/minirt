@@ -40,16 +40,16 @@ int	assign_c(char **elements, t_scene *scene)
 	err = 0;
 	if (count_array_rows((void **)elements) != 4)
 	{
-		printf("Error\n Incorrect number of element C info.\n");
+		printf("Error\nIncorrect number of element C info.\n");
 		return (1);
 	}
+	camera.fov = ft_atoi_strict(elements[3], &err);
+	if (err != 0)
+		printf("Error\n atod Error in attempt to assign C.\n");
 	err += assign_vector(elements[1], &camera.pos);
 	err += assign_vector(elements[2], &camera.angle);
 	err += check_angle(&camera.angle);
 	err += check_sym_unit(camera.angle);
-	camera.fov = ft_atoi_strict(elements[3], &err);
-	if (err != 0)
-		printf("Error\n atod Error in attempt to assign C.\n");
 	err += check_fov(camera.fov);
 	scene->cam = camera;
 	return (err);
@@ -63,7 +63,7 @@ int	assign_l(char **elements, t_scene *scene)
 	err = 0;
 	if (count_array_rows((void **)elements) != 4)
 	{
-		printf("Error\n Incorrect number of element L info.\n");
+		printf("Error\nIncorrect number of element L info.\n");
 		return (1);
 	}
 	err += assign_vector(elements[1], &light.pos);
