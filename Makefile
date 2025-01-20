@@ -16,6 +16,8 @@ FILES :=	main \
 			vectors_ext \
 			raytrace_pixel \
 			cast_ray \
+			cast_ray_plane \
+			cast_ray_sphere \
 			cast_ray_cylinder \
 			get_hit_colour \
 

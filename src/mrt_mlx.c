@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 14:01:41 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/20 12:36:36 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/20 12:49:32 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ static t_colour	fix_colour_range(t_colour colour)
 		colour.green = 255;
 	else if (colour.green < 0)
 		colour.green = 0;
+	return (colour);
 }
 
 void	get_all_pixels(t_mrt_dat *dat,
