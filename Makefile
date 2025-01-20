@@ -1,6 +1,6 @@
 CC := cc
 CFLAGS := -Wall -Wextra -Werror
-DEBUG_FLAGS := -g -DDEBUG=1 -DREASIGN_ANGLES=1
+DEBUG_FLAGS := -g -DDEBUG=1
 
 NAME := miniRT
 
@@ -34,6 +34,14 @@ ifeq ($(UNAME),Linux)
 	CFLAGS += -DLINUX
 	MLX = minilibx-linux
 	LFLAGS := -lXext -lX11 -lm
+endif
+
+# allow reasigning of the angles in the scenes, to allow running some invalid
+# scenes
+ifdef REASIGN_ANGLES
+	CFLAGS += -DREASIGN_ANGLES=1
+else
+	DEBUG_FLAGS += -DREASIGN_ANGLES=1
 endif
 
 SRC_DIR := src/
