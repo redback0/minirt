@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/27 12:48:02 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:04:16 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ typedef struct s_scene
 {
 	t_alight	alight;
 	t_cam		cam;
-	// below may change later to a linked list
 	t_light		light;
 	t_list		*objs;
 }	t_scene;
