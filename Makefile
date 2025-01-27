@@ -20,6 +20,7 @@ FILES :=	main \
 			cast_ray_sphere \
 			cast_ray_cylinder \
 			get_hit_colour \
+			move_camera \
 
 
 # OS SPECIFICS

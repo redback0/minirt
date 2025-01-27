@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:43:37 by nlehmeye          #+#    #+#             */
-/*   Updated: 2025/01/20 12:36:59 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:54:50 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,26 @@ int	window_closed(t_mrt_dat *dat)
 // here cause no space in mrt_mlx.c
 int	key_hook(int key, t_mrt_dat *dat)
 {
+	//printf("%x\n", key);
 	if (key == K_ESCAPE)
 	{
 		cleanup_mlx(&dat->mlx);
 		ft_lstclear(&(dat->scene.objs), free);
 		exit(0);
 	}
+	try_movement(key, dat);
 	return (0);
 }
+
+int	render_frame(t_mrt_dat* dat)
+{
+	init_camera(&dat->scene.cam);
+	get_all_pixels(dat, raytrace_pixel);
+	mlx_put_image_to_window(dat->mlx.mlxptr, dat->mlx.winptr, dat->mlx.img.img,
+		0, 0);
+	return (0);
+}
+
 
 int	main(int argc, char **argv)
 {
@@ -50,11 +62,8 @@ int	main(int argc, char **argv)
 		exit(1);
 	}
 	get_mlx_dat(&dat);
-	init_camera(&dat.scene.cam);
-	get_all_pixels(&dat, raytrace_pixel);
+	render_frame(&dat);
 	printf("Render complete\n");
-	mlx_put_image_to_window(dat.mlx.mlxptr, dat.mlx.winptr, dat.mlx.img.img,
-		0, 0);
 	mlx_loop(dat.mlx.mlxptr);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/20 12:44:13 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/27 12:48:02 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,39 @@
 
 // some define crap, don't worry about this
 # ifdef LINUX
-#  define K_ESCAPE 0xff1b
 
+// LINUX KEYCODES
+#  define K_ESCAPE       0xff1b
+
+// camera angle
+#  define K_LEFT_ARROW   0xff51
+#  define K_UP_ARROW     0xff52
+#  define K_RIGHT_ARROW  0xff53
+#  define K_DOWN_ARROW   0xff54
+
+// camera position (x/z axis)
+#  define K_A            0x0061
+#  define K_W            0x0077
+#  define K_D            0x0064
+#  define K_S            0x0073
+
+// camera position (y axis)
+#  define K_SPACE        0x0020
+#  define K_LSHIFT       0xffe1
+
+// OTHER LINUX DEFINES
 #  define DESTROY_DISPLAY 1
 #  define RESIZABLE 1
 
 # else
-#  define K_ESCAPE 0x35
 
+// MACOS KEYCODES
+#  define K_ESCAPE 0x35
+// MISSING A LOT CAUSE I DON'T HAVE ACCESS TO A MACOS SYSTEM
+
+// NO OP FUNC (for compiler reasons)
 void		mlx_destroy_display(void *mlx);
+// OTHER MACOS DEFINES
 #  define DESTROY_DISPLAY 0
 #  define RESIZABLE 0
 # endif
@@ -219,6 +243,8 @@ int			new_image(void *mlxptr, t_image *image, int width, int height);
 void		get_all_pixels(t_mrt_dat *dat,
 				t_colour (*pixel_func)(t_mrt_dat *, int, int));
 int			key_hook(int key, t_mrt_dat *dat);
+int			render_frame(t_mrt_dat* dat);
+int			try_movement(int key, t_mrt_dat* dat);
 
 //  ** main.c ** //
 int			window_closed(t_mrt_dat *dat);
