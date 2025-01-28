@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/27 13:04:16 by njackson         ###   ########.fr       */
+/*   Updated: 2025/01/28 19:32:12 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct s_alight
 {
 	double		ratio;
 	t_colour	colour;
+	int			is_set;
 }	t_alight;
 
 // a spot light, or just a light
@@ -107,6 +108,7 @@ typedef struct s_light
 	t_pos		pos;
 	double		ratio;
 	t_colour	colour;
+	int			is_set;
 }	t_light;
 
 // the camera :)
@@ -123,6 +125,7 @@ typedef struct s_cam
 	double	ysin;
 	double	ycos;
 	double	rect_dist;
+	int		is_set;
 }	t_cam;
 
 // an enum for defining what type of object is stored in the struct below
