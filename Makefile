@@ -1,5 +1,5 @@
 CC := cc
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -O3 -finline-functions
 DEBUG_FLAGS := -g -DDEBUG=1
 
 NAME := miniRT

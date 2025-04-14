@@ -6,7 +6,7 @@
 /*   By: nlehmeye <nlehmeye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 11:43:37 by nlehmeye          #+#    #+#             */
-/*   Updated: 2025/01/27 12:54:50 by njackson         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:42:42 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,17 @@ int	key_hook(int key, t_mrt_dat *dat)
 
 int	render_frame(t_mrt_dat* dat)
 {
+	clock_t	start_time;
+	clock_t	end_time;
+
+	start_time = clock();
 	init_camera(&dat->scene.cam);
 	get_all_pixels(dat, raytrace_pixel);
 	mlx_put_image_to_window(dat->mlx.mlxptr, dat->mlx.winptr, dat->mlx.img.img,
 		0, 0);
+	end_time = clock();
+	printf("render took %f seconds\n",
+		(double)(end_time - start_time) / CLOCKS_PER_SEC);
 	return (0);
 }
 
@@ -63,7 +70,6 @@ int	main(int argc, char **argv)
 	}
 	get_mlx_dat(&dat);
 	render_frame(&dat);
-	printf("Render complete\n");
 	mlx_loop(dat.mlx.mlxptr);
 	return (0);
 }

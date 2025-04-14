@@ -6,7 +6,7 @@
 /*   By: njackson <njackson@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/25 11:16:39 by njackson          #+#    #+#             */
-/*   Updated: 2025/01/28 19:32:12 by njackson         ###   ########.fr       */
+/*   Updated: 2025/04/14 12:42:26 by njackson         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
+# include <time.h>
 
 // some define crap, don't worry about this
 # ifdef LINUX
